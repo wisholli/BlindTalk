@@ -13,7 +13,6 @@ const Login = (props: Props) => {
   };
 
   const authData = useAppSelector((state) => state.auth);
-  console.log(authData);
 
   if (authData.statusText === "OK") {
     return <Navigate to={"/"} />;

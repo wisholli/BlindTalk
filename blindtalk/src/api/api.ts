@@ -16,3 +16,21 @@ export const authApi = {
     return instance.get("auth/status");
   },
 };
+
+export const usersApi = {
+  getUsers() {
+    return instance.get("/users");
+  },
+};
+
+export const converationsApi = {
+  createANewConversation(recipientId: number, message: string) {
+    return instance.post("conversations", {
+      recipientId,
+      message,
+    });
+  },
+  getConversations() {
+    return instance.get("conversations");
+  },
+};
