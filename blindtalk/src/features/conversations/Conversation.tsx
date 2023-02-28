@@ -27,16 +27,16 @@ const Conversation = () => {
   let conversationId = conversationData.currentDialog?.id;
 
   const sendNewMessage = (content: string) => {
-    if (conversationId) dispatch(sendMessage({ conversationId, content }));
+    if (conversationId) {
+      dispatch(sendMessage({ conversationId, content }));
+    }
   };
-
   const messages = messagesData.messages
     .map((message) => (
       <Messages
         author={message.author}
         content={message.content}
         createdAt={message.createdAt}
-        id={message.id}
       />
     ))
     .reverse();
@@ -63,7 +63,7 @@ const Conversation = () => {
               .format("DD MMM YYYY")}
           </div>
         </div>
-        <div>{messages}</div>
+        <div className="h-100 overflow-auto">{messages}</div>
         <SendMessageForm sendNewMessage={sendNewMessage} />
       </div>
     </div>

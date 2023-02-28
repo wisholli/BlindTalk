@@ -8,6 +8,9 @@ module.exports = {
         "basic-gray-5": "#f9f9f9",
         "basic-gray-10": "#f1f1f1",
       },
+      spacing: {
+        100: "32rem",
+      },
     },
   },
   plugins: [],

@@ -13,8 +13,6 @@ const Conversations = () => {
   const authData = useAppSelector((state) => state.auth);
   const conversationData = useAppSelector((state) => state.conversations);
 
-  console.log(conversationData);
-
   const conversations = conversationData.data.map((conversation) => {
     if (conversation.creator.id === authData.id) {
       return (

@@ -19,9 +19,7 @@ export const getConversationMessages = createAsyncThunk(
 export const sendMessage = createAsyncThunk(
   "messages/sendMessage",
   async function ({ conversationId, content }: SendMessageData, { dispatch }) {
-    const response = await messagesApi.sendMessage(conversationId, content);
-    console.log(response);
-
+    await messagesApi.sendMessage(conversationId, content);
     dispatch(addMessage({ conversationId, content }));
   }
 );

@@ -39,7 +39,7 @@ export type NewConversationData = {
 };
 
 export type MessageData = {
-  id: number;
+  id?: number;
   content: string;
   createdAt: string;
   author: UserData;
