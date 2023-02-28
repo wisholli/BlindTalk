@@ -33,4 +33,19 @@ export const converationsApi = {
   getConversations() {
     return instance.get("conversations");
   },
+  getConversationData(id: string) {
+    return instance.get(`conversations/${id}`);
+  },
+};
+
+export const messagesApi = {
+  getMessages(id: string) {
+    return instance.get(`messages/${id}`);
+  },
+  sendMessage(conversationId: number, content: string) {
+    return instance.post("messages", { conversationId, content });
+  },
+  editMessage(messageId: number, content: string) {
+    return instance.patch("messages", { messageId, content });
+  },
 };

@@ -4,7 +4,7 @@ export type AuthData = {
 };
 
 export type initialAuthData = {
-  id: string;
+  id: null | number;
   email: string;
   statusText: string;
 };
@@ -25,14 +25,32 @@ type ConversationData = {
   recipient: UserData;
   id: number;
   createdAt: string;
-  messages: string[];
+  messages: MessageData[];
 };
 
 export type initialConversationsData = {
   data: ConversationData[];
+  currentDialog: null | ConversationData;
 };
 
 export type NewConversationData = {
   recipientId: number;
   message: string;
+};
+
+export type MessageData = {
+  id: number;
+  content: string;
+  createdAt: string;
+  author: UserData;
+};
+
+export type initialMessagesData = {
+  id: number;
+  messages: MessageData[];
+};
+
+export type SendMessageData = {
+  conversationId: number;
+  content: string;
 };

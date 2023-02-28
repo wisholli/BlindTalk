@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import conversationsSlice from "../features/conversations/conversationsSlice";
 import authSlice from "../features/login/authSlice";
+import messagesSlice from "../features/messages/messagesSlice";
 import usersSlice from "../features/users/usersSlice";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     auth: authSlice,
     users: usersSlice,
     conversations: conversationsSlice,
+    messages: messagesSlice,
   },
 });
 

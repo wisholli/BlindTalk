@@ -1,12 +1,9 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Conversation from "./Conversation";
 import { useEffect } from "react";
 import { getConversations } from "./conversationsSlice";
-import { Navigate, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-type Props = {};
-
-const Conversations = (props: Props) => {
+const Conversations = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -16,11 +13,10 @@ const Conversations = (props: Props) => {
   const authData = useAppSelector((state) => state.auth);
   const conversationData = useAppSelector((state) => state.conversations);
 
+  console.log(conversationData);
+
   const conversations = conversationData.data.map((conversation) => {
-    if (
-      String(conversation.creator.id) ||
-      String(conversation.recipient.id) === authData.id
-    ) {
+    if (conversation.creator.id === authData.id) {
       return (
         <div className="mx-auto w-5/6">
           <NavLink
@@ -29,6 +25,18 @@ const Conversations = (props: Props) => {
           >
             <div>{conversation.recipient.firstName}</div>
             <div>{conversation.recipient.lastName}</div>
+          </NavLink>
+        </div>
+      );
+    } else if (conversation.recipient.id === authData.id) {
+      return (
+        <div className="mx-auto w-5/6">
+          <NavLink
+            to={"/conversation/" + conversation.id}
+            className="flex gap-1"
+          >
+            <div>{conversation.creator.firstName}</div>
+            <div>{conversation.creator.lastName}</div>
           </NavLink>
         </div>
       );

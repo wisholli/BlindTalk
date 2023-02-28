@@ -4,6 +4,7 @@ import { converationsApi } from "../../api/api";
 
 const initialState: initialConversationsData = {
   data: [],
+  currentDialog: null,
 };
 
 export const createANewConversation = createAsyncThunk(
@@ -25,6 +26,14 @@ export const getConversations = createAsyncThunk(
   }
 );
 
+export const getConversationData = createAsyncThunk(
+  "conversations/getConversationData",
+  async function (id: string) {
+    const response = await converationsApi.getConversationData(id);
+    return response.data;
+  }
+);
+
 const conversationsSlice = createSlice({
   name: "conversations",
   initialState,
@@ -35,6 +44,9 @@ const conversationsSlice = createSlice({
     });
     builder.addCase(getConversations.fulfilled, (state, { payload }) => {
       state.data = payload;
+    });
+    builder.addCase(getConversationData.fulfilled, (state, { payload }) => {
+      state.currentDialog = payload;
     });
   },
 });

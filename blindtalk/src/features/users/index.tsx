@@ -5,7 +5,7 @@ import UserInfo from "./userInfo";
 import { createANewConversation } from "../conversations/conversationsSlice";
 import { NewConversationData } from "../../types";
 
-const People = () => {
+const Users = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -37,4 +37,4 @@ const People = () => {
   );
 };
 
-export default People;
+export default Users;

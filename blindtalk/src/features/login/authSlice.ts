@@ -3,7 +3,7 @@ import { authApi } from "../../api/api";
 import { AuthData, initialAuthData } from "../../types";
 
 const initialState: initialAuthData = {
-  id: "",
+  id: null,
   email: "",
   statusText: "",
 };
