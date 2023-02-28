@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getUsers } from "./usersSlice";
 import UserInfo from "./userInfo";
 import { createANewConversation } from "../conversations/conversationsSlice";
-import { NewConversationData } from "../../types";
 
 const Users = () => {
   const dispatch = useAppDispatch();
@@ -14,10 +13,9 @@ const Users = () => {
 
   const userData = useAppSelector((state) => state.users);
 
-  const createConversation = ({
-    message,
-    recipientId,
-  }: NewConversationData) => {
+  const message = "";
+
+  const createConversation = (recipientId: number) => {
     dispatch(createANewConversation({ message, recipientId }));
   };
 
