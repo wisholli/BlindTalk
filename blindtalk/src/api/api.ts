@@ -1,4 +1,5 @@
 import axios from "axios";
+import { RegisterData } from "../types";
 
 const instance = axios.create({
   withCredentials: true,
@@ -14,6 +15,9 @@ export const authApi = {
   },
   getAuthStatus() {
     return instance.get("auth/status");
+  },
+  register(data: RegisterData) {
+    return instance.post("auth/register", data);
   },
 };
 

@@ -54,3 +54,10 @@ export type SendMessageData = {
   conversationId: number;
   content: string;
 };
+
+export type RegisterData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};

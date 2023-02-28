@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../../api/api";
-import { AuthData, initialAuthData } from "../../types";
+import { AuthData, initialAuthData, RegisterData } from "../../types";
 
 const initialState: initialAuthData = {
   id: null,
@@ -24,6 +24,18 @@ export const getAuthStatus = createAsyncThunk(
     const { id, email } = response.data;
     const statusText = response.statusText;
     return { id, email, statusText };
+  }
+);
+
+export const register = createAsyncThunk<void, RegisterData>(
+  "auth/register",
+  async function (data: RegisterData, { dispatch }) {
+    const { password } = data;
+    const response = await authApi.register(data);
+    if (response.data) {
+      const { email } = response.data;
+      dispatch(login({ password, email }));
+    }
   }
 );
 
