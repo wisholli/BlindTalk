@@ -13,7 +13,7 @@ const Users = () => {
 
   const userData = useAppSelector((state) => state.users);
 
-  const message = "";
+  const message = "hi";
 
   const createConversation = (recipientId: number) => {
     dispatch(createANewConversation({ message, recipientId }));
