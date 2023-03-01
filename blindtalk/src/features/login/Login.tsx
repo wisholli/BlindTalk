@@ -18,11 +18,7 @@ const Login = (props: Props) => {
     return <Navigate to={"/"} />;
   }
 
-  return (
-    <div>
-      <LoginForm onLogin={onLogin} />
-    </div>
-  );
+  return <LoginForm onLogin={onLogin} />;
 };
 
 export default Login;

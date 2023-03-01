@@ -1,4 +1,5 @@
 import { Formik, Form, Field } from "formik";
+import { NavLink } from "react-router-dom";
 import { RegisterData } from "../../types";
 
 type Props = {
@@ -71,7 +72,15 @@ export const RegisterForm = ({ onRegister }: Props) => {
             </div>
 
             <div className="text-center">
-              <button type="submit">Sing in</button>
+              <button type="submit" className="text-red-500">
+                Sing up
+              </button>
+              <div className="flex">
+                <p className="mr-2">Have an account?</p>
+                <NavLink to={"/login"} className="text-blue-500">
+                  Sing in
+                </NavLink>
+              </div>
             </div>
           </Form>
         </Formik>
