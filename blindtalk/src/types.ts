@@ -6,7 +6,6 @@ export type AuthData = {
 export type initialAuthData = {
   id: null | number;
   email: string;
-  statusText: string;
 };
 
 export type UserData = {

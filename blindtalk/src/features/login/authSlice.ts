@@ -1,11 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { authApi } from "../../api/api";
 import { AuthData, initialAuthData, RegisterData } from "../../types";
 
 const initialState: initialAuthData = {
   id: null,
   email: "",
-  statusText: "",
 };
 
 export const login = createAsyncThunk<void, AuthData>(
@@ -22,8 +21,7 @@ export const getAuthStatus = createAsyncThunk(
   async function () {
     const response = await authApi.getAuthStatus();
     const { id, email } = response.data;
-    const statusText = response.statusText;
-    return { id, email, statusText };
+    return { id, email };
   }
 );
 
@@ -44,11 +42,13 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAuthStatus.fulfilled, (state, { payload }) => {
-      state.id = payload.id;
-      state.email = payload.email;
-      state.statusText = payload.statusText;
-    });
+    builder.addCase(
+      getAuthStatus.fulfilled,
+      (state, { payload }: PayloadAction<initialAuthData>) => {
+        state.id = payload.id;
+        state.email = payload.email;
+      }
+    );
   },
 });
 

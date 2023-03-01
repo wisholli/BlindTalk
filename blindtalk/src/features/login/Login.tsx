@@ -14,7 +14,7 @@ const Login = (props: Props) => {
 
   const authData = useAppSelector((state) => state.auth);
 
-  if (authData.statusText === "OK") {
+  if (authData.id) {
     return <Navigate to={"/"} />;
   }
 

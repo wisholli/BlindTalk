@@ -13,7 +13,7 @@ const Register = () => {
     dispatch(register(data));
   };
 
-  if (authData.statusText === "OK") {
+  if (authData.id) {
     return <Navigate to={"/"} />;
   }
 

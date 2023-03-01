@@ -9,6 +9,7 @@ import { getAuthStatus } from "./features/login/authSlice";
 import { useAppDispatch } from "./app/hooks";
 import { getConversations } from "./features/conversations/conversationsSlice";
 import Register from "./features/register";
+import { ProtectedRoutes } from "./utils/ProtectedRoutes";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -16,19 +17,24 @@ function App() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (pathname !== "/register" && pathname !== "/login")
-      dispatch(getAuthStatus()).then(() => dispatch(getConversations()));
+    if (!["/register", "/login"].includes(pathname))
+      dispatch(getAuthStatus()).then((data: { payload: any }) => {
+        if (data.payload.id) dispatch(getConversations());
+      });
   }, []);
 
   return (
     <div className="flex flex-col bg-basic-gray-5 h-screen w-full">
       <NavBar />
       <Routes>
+        <Route path="/" element={<ProtectedRoutes />}>
+          <Route path="/conversation" element={<Conversations />}></Route>
+          <Route path="/" element={<Users />}></Route>
+        </Route>
+
+        <Route path="/conversation/:id" element={<Conversation />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/" element={<Users />}></Route>
-        <Route path="/conversation" element={<Conversations />}></Route>
-        <Route path="/conversation/:id" element={<Conversation />}></Route>
       </Routes>
     </div>
   );
