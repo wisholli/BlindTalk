@@ -12,12 +12,20 @@ const Users = () => {
   }, []);
 
   const userData = useAppSelector((state) => state.users);
+  const conversationsData = useAppSelector((state) => state.conversations.data);
 
   const message = "hi";
 
   const createConversation = (recipientId: number) => {
     dispatch(createANewConversation({ message, recipientId }));
   };
+
+  const userForNewConversation = userData.data.filter(
+    (user) =>
+      !conversationsData.some(
+        (c) => c.creator.id === user.id || c.recipient.id === user.id
+      )
+  );
 
   return (
     <div className="mx-auto w-5/6">
@@ -26,7 +34,7 @@ const Users = () => {
           Find your new friend!
         </h1>
         <div className="overflow-y-scroll">
-          {userData.data.map((user) => (
+          {userForNewConversation.map((user) => (
             <UserInfo {...user} createConversation={createConversation} />
           ))}
         </div>
