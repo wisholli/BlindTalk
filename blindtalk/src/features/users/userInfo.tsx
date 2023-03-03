@@ -1,12 +1,4 @@
 import { UserData } from "../../types";
-import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  Form,
-  Field,
-  FieldProps,
-} from "formik";
 import { NavLink } from "react-router-dom";
 
 interface Props extends UserData {

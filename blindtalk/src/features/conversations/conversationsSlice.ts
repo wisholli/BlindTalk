@@ -9,11 +9,8 @@ const initialState: initialConversationsData = {
 
 export const createANewConversation = createAsyncThunk(
   "conversations/createNewConversation",
-  async function ({ message, recipientId }: NewConversationData) {
-    const response = await converationsApi.createANewConversation(
-      recipientId,
-      message
-    );
+  async function (data: NewConversationData) {
+    const response = await converationsApi.createANewConversation(data);
     return response.data;
   }
 );

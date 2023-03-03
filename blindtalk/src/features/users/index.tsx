@@ -35,7 +35,11 @@ const Users = () => {
         </h1>
         <div className="overflow-y-scroll">
           {userForNewConversation.map((user) => (
-            <UserInfo {...user} createConversation={createConversation} />
+            <UserInfo
+              key={user.id}
+              {...user}
+              createConversation={createConversation}
+            />
           ))}
         </div>
       </div>

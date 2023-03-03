@@ -10,8 +10,7 @@ const initialState: initialAuthData = {
 export const login = createAsyncThunk<void, AuthData>(
   "auth/login",
   async function (data: AuthData, { dispatch }) {
-    const { email, password } = data;
-    await authApi.login(email, password);
+    await authApi.login(data);
     dispatch(getAuthStatus());
   }
 );

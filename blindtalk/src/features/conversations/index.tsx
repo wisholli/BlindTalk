@@ -16,7 +16,7 @@ const Conversations = () => {
   const conversations = conversationData.data.map((conversation) => {
     if (conversation.creator.id === authData.id) {
       return (
-        <div className="mx-auto w-5/6">
+        <div key={conversation.id} className="mx-auto w-5/6">
           <NavLink
             to={"/conversation/" + conversation.id}
             className="flex gap-1"
@@ -28,7 +28,7 @@ const Conversations = () => {
       );
     } else if (conversation.recipient.id === authData.id) {
       return (
-        <div className="mx-auto w-5/6">
+        <div key={conversation.id} className="mx-auto w-5/6">
           <NavLink
             to={"/conversation/" + conversation.id}
             className="flex gap-1"
@@ -39,7 +39,7 @@ const Conversations = () => {
         </div>
       );
     } else {
-      <div>No dilogs</div>;
+      <div key={conversation.id}>No dilogs</div>;
     }
   });
   return <div>{conversations}</div>;

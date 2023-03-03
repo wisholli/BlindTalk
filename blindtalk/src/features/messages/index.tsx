@@ -1,30 +1,8 @@
 import { useAppSelector } from "../../app/hooks";
-import { EditMessageData, MessagesProps } from "../../types";
+import { MessagesProps } from "../../types";
 import moment from "moment";
 import editMessage from "../../assets/edit-message.png";
-import { useEffect, useState } from "react";
-
-// interface Props {number, (data: EditMessageData) => void}
-
-// const NewMessageForm = ({
-//   id,
-//   onEditMessage,
-// }: {
-//   id: number;
-//   onEditMessage: (data: EditMessageData) => void;
-// }) => {
-//   const [newMessage, setNewMessage] = useState("");
-//   useEffect(() => {
-//     onEditMessage({ messageId: id, content: newMessage });
-//   }, [newMessage]);
-//   return (
-//     <input
-//       type="text"
-//       value={newMessage}
-//       onChange={(e) => setNewMessage(e.target.value)}
-//     />
-//   );
-// };
+import { useState } from "react";
 
 const Messages = ({
   author,

@@ -25,7 +25,6 @@ const Conversation = () => {
 
   const conversationData = useAppSelector((state) => state.conversations);
   const messagesData = useAppSelector((state) => state.messages);
-  console.log(messagesData);
 
   let conversationId = conversationData.currentDialog?.id;
 
@@ -42,6 +41,7 @@ const Conversation = () => {
   const messages = messagesData.messages
     .map((message) => (
       <Messages
+        key={message.id}
         id={message.id}
         author={message.author}
         content={message.content}
@@ -62,7 +62,11 @@ const Conversation = () => {
           />
         </div>
         {conversationData.data.map((dialog) => (
-          <SideBar conversationId={dialog.id} recipient={dialog.recipient} />
+          <SideBar
+            key={dialog.id}
+            conversationId={dialog.id}
+            recipient={dialog.recipient}
+          />
         ))}
       </div>
       <div className="w-5/6">

@@ -1,5 +1,11 @@
 import axios from "axios";
-import { EditMessageData, RegisterData, SendMessageData } from "../types";
+import {
+  AuthData,
+  EditMessageData,
+  NewConversationData,
+  RegisterData,
+  SendMessageData,
+} from "../types";
 
 const instance = axios.create({
   withCredentials: true,
@@ -7,11 +13,8 @@ const instance = axios.create({
 });
 
 export const authApi = {
-  login(email: string, password: string) {
-    return instance.post("auth/login", {
-      email,
-      password,
-    });
+  login(data: AuthData) {
+    return instance.post("auth/login", data);
   },
   getAuthStatus() {
     return instance.get("auth/status");
@@ -28,11 +31,8 @@ export const usersApi = {
 };
 
 export const converationsApi = {
-  createANewConversation(recipientId: number, message: string) {
-    return instance.post("conversations", {
-      recipientId,
-      message,
-    });
+  createANewConversation(data: NewConversationData) {
+    return instance.post("conversations", data);
   },
   getConversations() {
     return instance.get("conversations");
