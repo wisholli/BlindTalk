@@ -38,7 +38,7 @@ export type NewConversationData = {
 };
 
 export type MessageData = {
-  id?: number;
+  id: number;
   content: string;
   createdAt: string;
   author: UserData;
@@ -59,4 +59,13 @@ export type RegisterData = {
   lastName: string;
   email: string;
   password: string;
+};
+
+export type MessagesProps = MessageData & {
+  onEditMessage: (data: EditMessageData) => void;
+};
+
+export type EditMessageData = {
+  messageId: number;
+  content: string;
 };

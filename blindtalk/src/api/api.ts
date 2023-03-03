@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RegisterData } from "../types";
+import { EditMessageData, RegisterData, SendMessageData } from "../types";
 
 const instance = axios.create({
   withCredentials: true,
@@ -46,10 +46,10 @@ export const messagesApi = {
   getMessages(id: string) {
     return instance.get(`messages/${id}`);
   },
-  sendMessage(conversationId: number, content: string) {
-    return instance.post("messages", { conversationId, content });
+  sendMessage(data: SendMessageData) {
+    return instance.post("messages", data);
   },
-  editMessage(messageId: number, content: string) {
-    return instance.patch("messages", { messageId, content });
+  editMessage(data: EditMessageData) {
+    return instance.patch("messages", data);
   },
 };

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
+  editMessage,
   getConversationMessages,
   sendMessage,
 } from "../messages/messagesSlice";
@@ -10,6 +11,7 @@ import moment from "moment";
 import Messages from "../messages";
 import SideBar from "../messages/SideBar";
 import SendMessageForm from "./SendMessageForm";
+import { EditMessageData } from "../../types";
 
 const Conversation = () => {
   const dispatch = useAppDispatch();
@@ -23,20 +25,28 @@ const Conversation = () => {
 
   const conversationData = useAppSelector((state) => state.conversations);
   const messagesData = useAppSelector((state) => state.messages);
+  console.log(messagesData);
 
   let conversationId = conversationData.currentDialog?.id;
 
   const sendNewMessage = (content: string) => {
     if (conversationId) {
-      dispatch(sendMessage({ conversationId, content }));
+      dispatch(sendMessage({ content, conversationId }));
     }
   };
+
+  const onEditMessage = (data: EditMessageData) => {
+    dispatch(editMessage(data));
+  };
+
   const messages = messagesData.messages
     .map((message) => (
       <Messages
+        id={message.id}
         author={message.author}
         content={message.content}
         createdAt={message.createdAt}
+        onEditMessage={onEditMessage}
       />
     ))
     .reverse();

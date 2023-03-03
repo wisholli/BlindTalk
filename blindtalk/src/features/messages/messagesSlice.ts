@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { messagesApi } from "../../api/api";
-import { initialMessagesData, SendMessageData } from "../../types";
+import {
+  EditMessageData,
+  initialMessagesData,
+  SendMessageData,
+} from "../../types";
 
 const initialState: initialMessagesData = {
   id: 0,
@@ -18,9 +22,18 @@ export const getConversationMessages = createAsyncThunk(
 
 export const sendMessage = createAsyncThunk(
   "messages/sendMessage",
-  async function ({ conversationId, content }: SendMessageData, { dispatch }) {
-    await messagesApi.sendMessage(conversationId, content);
-    dispatch(addMessage({ conversationId, content }));
+  async function (data: SendMessageData, { dispatch }) {
+    await messagesApi.sendMessage(data);
+    dispatch(addMessage(data));
+  }
+);
+
+export const editMessage = createAsyncThunk<EditMessageData, EditMessageData>(
+  "messages/editMessage",
+  async function (newData: EditMessageData) {
+    await messagesApi.editMessage(newData);
+    const { messageId, content } = newData;
+    return { messageId, content };
   }
 );
 
@@ -36,6 +49,14 @@ const messagesSlice = createSlice({
     builder.addCase(getConversationMessages.fulfilled, (state, { payload }) => {
       state.id = payload.id;
       state.messages = payload.messages;
+    });
+    builder.addCase(editMessage.fulfilled, (state, { payload }) => {
+      state.messages = state.messages.map((m) => {
+        if (m.id === payload.messageId) {
+          m.content = payload.content;
+        }
+        return m;
+      });
     });
   },
 });
