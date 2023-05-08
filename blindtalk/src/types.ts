@@ -1,3 +1,5 @@
+import { LegacyRef } from "react";
+
 export type AuthData = {
   email: string;
   password: string;
@@ -63,6 +65,7 @@ export type RegisterData = {
 
 export type MessagesProps = MessageData & {
   onEditMessage: (data: EditMessageData) => void;
+  lastMessageRef: LegacyRef<HTMLDivElement> | undefined;
 };
 
 export type EditMessageData = {

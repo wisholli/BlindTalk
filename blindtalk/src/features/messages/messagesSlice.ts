@@ -24,7 +24,6 @@ export const sendMessage = createAsyncThunk(
   "messages/sendMessage",
   async function (data: SendMessageData, { dispatch }) {
     await messagesApi.sendMessage(data);
-    dispatch(addMessage(data));
   }
 );
 
@@ -41,8 +40,8 @@ const messagesSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {
-    addMessage: (state, { payload }) => {
-      state.messages.push(payload);
+    receiveMessage: (state, { payload }) => {
+      state.messages.unshift(payload);
     },
   },
   extraReducers: (builder) => {
@@ -61,5 +60,5 @@ const messagesSlice = createSlice({
   },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { receiveMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
