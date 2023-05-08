@@ -1,14 +1,14 @@
-import Login from "./features/login/Login";
+import Login from "./components/login/Login";
 import { Routes, Route, useLocation } from "react-router-dom";
-import NavBar from "./features/navbar";
-import Conversations from "./features/conversations";
-import Conversation from "./features/conversations/Conversation";
-import Users from "./features/users";
+import NavBar from "./components/navbar";
+import Conversations from "./components/conversations";
+import Conversation from "./components/conversations/Conversation";
+import Users from "./components/users";
 import { useEffect } from "react";
 import { getAuthStatus } from "./features/login/authSlice";
 import { useAppDispatch } from "./app/hooks";
 import { getConversations } from "./features/conversations/conversationsSlice";
-import Register from "./features/register";
+import Register from "./components/register";
 import { ProtectedRoutes } from "./utils/ProtectedRoutes";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col bg-basic-gray-5 h-screen w-full">
+    <div>
       <NavBar />
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
