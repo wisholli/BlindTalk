@@ -72,3 +72,8 @@ export type EditMessageData = {
   messageId: number;
   content: string;
 };
+
+export type ActiveCheckBox = {
+  male: boolean;
+  female: boolean;
+};
