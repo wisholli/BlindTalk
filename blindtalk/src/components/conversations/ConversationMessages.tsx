@@ -1,10 +1,10 @@
 import { useAppSelector } from "../../app/hooks";
 import { MessagesProps } from "../../types";
 import moment from "moment";
-import editMessage from "../../assets/edit-message.png";
+import editMessage from "../../assets/images/edit-message.png";
 import { useState } from "react";
 
-const Messages = ({
+export const ConversationMessages = ({
   author,
   content,
   createdAt,
@@ -27,7 +27,6 @@ const Messages = ({
                   onChange={(e) => setNewMessageText(e.target.value)}
                   className="bg-blue-400 outline-none"
                 />
-                {/* {content} */}
                 <div className="flex justify-between text-xs">
                   {moment(createdAt).utc().format("LT")}
                   {id && (
@@ -73,5 +72,3 @@ const Messages = ({
   }
   return <div>No author</div>;
 };
-
-export default Messages;

@@ -4,7 +4,7 @@ import logo from "./../../assets/images/logo.svg";
 import menuIcon from "./../../assets/images/menu-icon.svg";
 import closeIcon from "../../assets/images/close-icon.svg";
 
-const NavBar = () => {
+export const Header = () => {
   let currentScreenWidth = window.innerWidth;
 
   const [isToggled, setToggle] = useState<boolean>(false);
@@ -27,7 +27,7 @@ const NavBar = () => {
               Find new friend
             </NavLink>
             <NavLink
-              to={"/conversation"}
+              to={"/conversation/:id"}
               className="font-maven font-normal text-2xl text-black-100 "
             >
               Conversations
@@ -65,5 +65,3 @@ const NavBar = () => {
     </div>
   );
 };
-
-export default NavBar;

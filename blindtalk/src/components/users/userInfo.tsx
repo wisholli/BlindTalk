@@ -5,7 +5,12 @@ interface Props extends UserData {
   createConversation: (recipientId: number) => void;
 }
 
-const UserInfo = ({ firstName, lastName, createConversation, id }: Props) => {
+export const UserInfo = ({
+  firstName,
+  lastName,
+  createConversation,
+  id,
+}: Props) => {
   return (
     <div className="flex justify-between text-xl my-5">
       <div className="flex ml-20">
@@ -20,5 +25,3 @@ const UserInfo = ({ firstName, lastName, createConversation, id }: Props) => {
     </div>
   );
 };
-
-export default UserInfo;

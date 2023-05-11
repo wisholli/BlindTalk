@@ -9,8 +9,8 @@ import {
 } from "../../features/messages/messagesSlice";
 import { getConversationData } from "../../features/conversations/conversationsSlice";
 import moment from "moment";
-import Messages from "../messages";
-import SideBar from "../messages/SideBar";
+import { ConversationMessages } from "./ConversationMessages";
+import SideBar from "./SideBar";
 import SendMessageForm from "./SendMessageForm";
 import { EditMessageData } from "../../types";
 import { SocketContext } from "../../utils/SocketContext/SocketContext";
@@ -20,6 +20,7 @@ const Conversation = () => {
   const conversationData = useAppSelector((state) => state.conversations);
   const messagesData = useAppSelector((state) => state.messages);
 
+  //WebSocket
   const socket = useContext(SocketContext);
   useEffect(() => {
     socket.on("connected", () => {
@@ -34,6 +35,7 @@ const Conversation = () => {
     };
   }, []);
 
+  //Get server data
   const { id } = useParams();
   useEffect(() => {
     if (id) {
@@ -42,13 +44,14 @@ const Conversation = () => {
     }
   }, [id]);
 
+  //Messages scroll
   const lastMessageRef = useRef<null | HTMLDivElement>(null);
-  console.log(lastMessageRef);
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesData.messages[0]]);
 
+  //Actions
   let conversationId = conversationData.currentDialog?.id;
 
   const sendNewMessage = (content: string) => {
@@ -63,12 +66,9 @@ const Conversation = () => {
 
   const messages = messagesData.messages
     .map((message) => (
-      <Messages
+      <ConversationMessages
         key={message.id}
-        id={message.id}
-        author={message.author}
-        content={message.content}
-        createdAt={message.createdAt}
+        {...message}
         onEditMessage={onEditMessage}
         lastMessageRef={lastMessageRef}
       />

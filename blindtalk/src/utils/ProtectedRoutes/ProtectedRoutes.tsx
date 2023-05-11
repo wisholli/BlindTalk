@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 
 export const ProtectedRoutes = () => {
   const authData = useAppSelector((state) => state.auth);

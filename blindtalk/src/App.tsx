@@ -1,15 +1,14 @@
 import Login from "./components/login/Login";
 import { Routes, Route, useLocation } from "react-router-dom";
-import NavBar from "./components/navbar";
-import Conversations from "./components/conversations";
+import { Header } from "./components/header/Header";
 import Conversation from "./components/conversations/Conversation";
-import Users from "./components/users";
+import { Users } from "./components/users/Users";
 import { useEffect } from "react";
 import { getAuthStatus } from "./features/login/authSlice";
 import { useAppDispatch } from "./app/hooks";
 import { getConversations } from "./features/conversations/conversationsSlice";
-import Register from "./components/register";
-import { ProtectedRoutes } from "./utils/ProtectedRoutes";
+import Register from "./components/register/Register";
+import { ProtectedRoutes } from "./utils/ProtectedRoutes/ProtectedRoutes";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,14 +24,13 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      <Header />
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
-          <Route path="/conversation" element={<Conversations />}></Route>
           <Route path="/" element={<Users />}></Route>
+          <Route path="/conversation/:id" element={<Conversation />}></Route>
         </Route>
 
-        <Route path="/conversation/:id" element={<Conversation />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
       </Routes>

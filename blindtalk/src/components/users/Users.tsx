@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getUsers } from "../../features/users/usersSlice";
-import UserInfo from "./userInfo";
+import { UserInfo } from "./UserInfo";
 import {
   createANewConversation,
   getConversations,
 } from "../../features/conversations/conversationsSlice";
 
-const Users = () => {
+export const Users = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -50,5 +50,3 @@ const Users = () => {
     </div>
   );
 };
-
-export default Users;
