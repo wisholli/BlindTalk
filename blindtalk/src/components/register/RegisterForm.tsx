@@ -43,7 +43,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 id="firstName"
                 name="firstName"
                 placeholder="Fist name"
-                className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+                className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
             </div>
             <div className="w-[calc(100%/2-20px/2)] mb-10 lg:w-[calc(100%/2-63px/2)] ">
@@ -51,7 +51,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 id="lastName"
                 name="lastName"
                 placeholder="Last name"
-                className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+                className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
             </div>
             <div className="w-[calc(100%/2-20px/2)] mb-10 lg:w-[calc(100%/2-63px/2)] ">
@@ -59,7 +59,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 id="country"
                 name="country"
                 placeholder="Country"
-                className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+                className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
             </div>
             <div className="w-[calc(100%/2-20px/2)] mb-10 lg:w-[calc(100%/2-63px/2)]">
@@ -67,7 +67,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 id="city"
                 name="city"
                 placeholder="City"
-                className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+                className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
             </div>
             <div className="w-full mb-10">
@@ -75,7 +75,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 id="email"
                 name="email"
                 placeholder="Email"
-                className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+                className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
             </div>
             <div className="w-full mb-10">
@@ -83,7 +83,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 id="password"
                 name="password"
                 placeholder="Password"
-                className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+                className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
             </div>
             <div className="w-[calc(100%/2-20px/2)] mb-5 lg:w-[calc(100%/2-63px/2)] md:mb-10 flex flex-row items-center border-b border-black-200 ">
@@ -100,7 +100,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
               />
               <label
                 htmlFor="sex-male"
-                className="font-maven font-normal text-2xl text-gray-100 ml-1 mr-5 md:text-3xl md:mr-11 md:ml-2"
+                className="font-maven font-normal text-2xl text-black-200 ml-1 mr-5 md:text-3xl md:mr-11 md:ml-2"
               >
                 M
               </label>
@@ -111,7 +111,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
               />
               <label
                 htmlFor="sex-female"
-                className="font-maven font-normal text-2xl text-gray-100 ml-1 md:text-3xl md:ml-2"
+                className="font-maven font-normal text-2xl text-black-200 ml-1 md:text-3xl md:ml-2"
               >
                 F
               </label>
@@ -121,7 +121,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 id="bDay"
                 name="bDay"
                 type="date"
-                className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+                className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
             </div>
           </div>

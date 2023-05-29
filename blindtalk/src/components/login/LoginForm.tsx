@@ -29,13 +29,13 @@ export const LoginForm = ({ onLogin }: Props) => {
             id="email"
             name="email"
             placeholder="Email"
-            className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200 mb-8 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl lg:mb-16 "
+            className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200 mb-8 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl lg:mb-16 "
           />
           <Field
             id="password"
             name="password"
             placeholder="Password"
-            className="w-full font-maven font-normal text-2xl text-gray-100 border-b border-black-200 mb-8 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl lg:mb-16"
+            className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200 mb-8 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl lg:mb-16"
           />
           <div className="flex justify-center">
             <button
