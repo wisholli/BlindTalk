@@ -1,37 +1,61 @@
 import { NavLink, useParams } from "react-router-dom";
 import { UserData } from "../../types";
+import { useAppSelector } from "../../app/hooks";
 
 interface Props {
   conversationId: number;
   recipient: UserData;
+  creator: UserData;
+  setToggle?: () => void;
 }
 
-const SideBar = ({ conversationId, recipient }: Props) => {
+const SideBar = ({ conversationId, recipient, creator, setToggle }: Props) => {
+  const authData = useAppSelector((state) => state.auth);
+
   const { id } = useParams();
+
   const userList =
     Number(id) === conversationId ? (
-      <div className="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400">
-        <div className="w-full">
-          <NavLink to={"/conversation/" + conversationId} className="text-lg">
-            {recipient.firstName} {recipient.lastName}
+      <div className="px-4 py-2 bg-green-100 bg-opacity-70 border-b-2 border-white shadow-sm lg:border-b-gray-400 lg:border-l-[15px] lg:border-r-2 lg:border-r-gray-400 lg:border-l-green-100 lg:bg-white lg:shadow-none">
+        <button onClick={setToggle}>
+          <NavLink
+            to={"/conversation/" + conversationId}
+            className="text-xl font-maven font-normal text-white lg:font-medium md:text-2xl lg:text-2xl lg:text-black-100"
+          >
+            {authData.id === recipient.id ? (
+              <div>
+                {creator.firstName} {creator.lastName}
+              </div>
+            ) : (
+              <div>
+                {recipient.firstName} {recipient.lastName}
+              </div>
+            )}
           </NavLink>
-        </div>
+        </button>
       </div>
     ) : (
-      <div className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
-        <div className="w-full">
-          <NavLink to={"/conversation/" + conversationId} className="text-lg">
-            {recipient.firstName} {recipient.lastName}
+      <div className="px-4 py-2 bg-green-100 bg-opacity-70 border-b-2 border-white shadow-sm lg:border-b-gray-400 lg:border-l-[15px] lg:border-r-2 lg:border-r-gray-400 lg:bg-white lg:shadow-none">
+        <button onClick={setToggle}>
+          <NavLink
+            to={"/conversation/" + conversationId}
+            className="text-xl font-maven font-normal text-white md:text-2xl lg:text-2xl lg:text-black-100"
+          >
+            {authData.id === recipient.id ? (
+              <div>
+                {creator.firstName} {creator.lastName}
+              </div>
+            ) : (
+              <div>
+                {recipient.firstName} {recipient.lastName}
+              </div>
+            )}
           </NavLink>
-        </div>
+        </button>
       </div>
     );
 
-  return (
-    <div className="flex flex-col w-full border-r-2 overflow-y-auto">
-      {userList}
-    </div>
-  );
+  return <div>{userList}</div>;
 };
 
 export default SideBar;

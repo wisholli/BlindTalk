@@ -7,7 +7,10 @@ import {
   receiveMessage,
   sendMessage,
 } from "../../features/messages/messagesSlice";
-import { getConversationData } from "../../features/conversations/conversationsSlice";
+import {
+  getConversationData,
+  setIsChatSelected,
+} from "../../features/conversations/conversationsSlice";
 import moment from "moment";
 import { ConversationMessages } from "./ConversationMessages";
 import SideBar from "./SideBar";
@@ -19,6 +22,8 @@ const Conversation = () => {
   const dispatch = useAppDispatch();
   const conversationData = useAppSelector((state) => state.conversations);
   const messagesData = useAppSelector((state) => state.messages);
+  const authData = useAppSelector((state) => state.auth);
+  const setSelectedStatus = () => dispatch(setIsChatSelected());
 
   //WebSocket
   const socket = useContext(SocketContext);
@@ -76,33 +81,85 @@ const Conversation = () => {
     .reverse();
 
   return (
-    <div className="mx-auto w-full flex">
-      <div className="w-1/6">
-        <div className="border-b-2 py-4 px-2">
-          <input
-            type="text"
-            placeholder="search chatting"
-            className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
-          />
+    <div>
+      <div className="hidden w-full lg:flex">
+        <div className="border-t-2 border-gray-400 w-1/4">
+          {conversationData.data.map((dialog) => (
+            <SideBar
+              key={dialog.id}
+              conversationId={dialog.id}
+              recipient={dialog.recipient}
+              creator={dialog.creator}
+            />
+          ))}
         </div>
-        {conversationData.data.map((dialog) => (
-          <SideBar
-            key={dialog.id}
-            conversationId={dialog.id}
-            recipient={dialog.recipient}
-          />
-        ))}
-      </div>
-      <div className="w-5/6">
-        <div className="flex items-center justify-center">
-          <div className="text-center text-xs box-border h-5 w-24 border-2 rounded-xl border-slate-200 bg-slate-200">
-            {moment(conversationData.currentDialog?.createdAt)
-              .utc()
-              .format("DD MMM YYYY")}
+        <div className="w-5/6 flex flex-col gap-5">
+          <div className="flex items-center justify-center">
+            <div className="font-maven font-normal text-xl text-black-100 border-b-2 border-black-200 border-opacity-60">
+              {moment(conversationData.currentDialog?.createdAt)
+                .utc()
+                .format("DD MMM YYYY")}
+            </div>
           </div>
+          <div className="mx-16 pr-5 h-[calc(100vh-308px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
+            {messages}
+          </div>
+          <SendMessageForm sendNewMessage={sendNewMessage} />
         </div>
-        <div className="h-100 overflow-auto">{messages}</div>
-        <SendMessageForm sendNewMessage={sendNewMessage} />
+      </div>
+      <div className="lg:hidden">
+        <div className={` ${conversationData.isChatSelected && "hidden"}`}>
+          {conversationData.data.map((dialog) => (
+            <SideBar
+              key={dialog.id}
+              conversationId={dialog.id}
+              recipient={dialog.recipient}
+              creator={dialog.creator}
+              setToggle={setSelectedStatus}
+            />
+          ))}
+        </div>
+        {conversationData.isChatSelected && (
+          <div>
+            <div className="border-none bg-green-100 px-3 py-4">
+              <div className="flex justify-center items-center">
+                {authData.email ===
+                conversationData.currentDialog?.creator.email ? (
+                  <button onClick={setSelectedStatus} className="flex gap-1">
+                    <div className="font-maven font-normal text-xl text-white">
+                      {conversationData.currentDialog.recipient.firstName}
+                    </div>
+                    <div className="font-maven font-normal text-xl text-white">
+                      {conversationData.currentDialog.recipient.lastName}
+                    </div>
+                  </button>
+                ) : (
+                  <button onClick={setSelectedStatus} className="flex gap-1">
+                    <div className="font-maven font-normal text-xl text-white">
+                      {conversationData.currentDialog?.creator.firstName}
+                    </div>
+                    <div className="font-maven font-normal text-xl text-white">
+                      {conversationData.currentDialog?.creator.lastName}
+                    </div>
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 mt-2">
+              <div className="flex items-center justify-center">
+                <div className="font-maven font-normal text-sm text-black-100 border-b-2 border-black-200 border-opacity-60">
+                  {moment(conversationData.currentDialog?.createdAt)
+                    .utc()
+                    .format("DD MMM YYYY")}
+                </div>
+              </div>
+              <div className="px-4 h-[calc(100vh-170px)] overflow-y-scroll">
+                {messages}
+              </div>
+              <SendMessageForm sendNewMessage={sendNewMessage} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

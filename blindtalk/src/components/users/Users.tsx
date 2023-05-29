@@ -9,14 +9,15 @@ import {
 
 export const Users = () => {
   const dispatch = useAppDispatch();
+  const userData = useAppSelector((state) => state.users);
+  const conversationsData = useAppSelector((state) => state.conversations.data);
+  let users = [...userData.data];
+  let reverseUsers = users.reverse();
 
   useEffect(() => {
     dispatch(getUsers());
     dispatch(getConversations());
-  }, []);
-
-  const userData = useAppSelector((state) => state.users);
-  const conversationsData = useAppSelector((state) => state.conversations.data);
+  }, [reverseUsers[0]]);
 
   const message = "hi";
 

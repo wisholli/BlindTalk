@@ -5,6 +5,7 @@ import { converationsApi } from "../../api/api";
 const initialState: initialConversationsData = {
   data: [],
   currentDialog: null,
+  isChatSelected: false,
 };
 
 export const createANewConversation = createAsyncThunk(
@@ -34,7 +35,11 @@ export const getConversationData = createAsyncThunk(
 const conversationsSlice = createSlice({
   name: "conversations",
   initialState,
-  reducers: {},
+  reducers: {
+    setIsChatSelected(state) {
+      state.isChatSelected = !state.isChatSelected;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createANewConversation.fulfilled, (state, { payload }) => {
       state.data.push(payload);
@@ -48,4 +53,5 @@ const conversationsSlice = createSlice({
   },
 });
 
+export const { setIsChatSelected } = conversationsSlice.actions;
 export default conversationsSlice.reducer;

@@ -32,6 +32,7 @@ type ConversationData = {
 export type initialConversationsData = {
   data: ConversationData[];
   currentDialog: null | ConversationData;
+  isChatSelected: boolean;
 };
 
 export type NewConversationData = {
