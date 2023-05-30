@@ -9,6 +9,7 @@ import {
 const initialState: initialMessagesData = {
   id: 0,
   messages: [],
+  editMessageId: 0,
 };
 
 export const getConversationMessages = createAsyncThunk(
@@ -22,7 +23,7 @@ export const getConversationMessages = createAsyncThunk(
 
 export const sendMessage = createAsyncThunk(
   "messages/sendMessage",
-  async function (data: SendMessageData, { dispatch }) {
+  async function (data: SendMessageData) {
     await messagesApi.sendMessage(data);
   }
 );
@@ -43,6 +44,9 @@ const messagesSlice = createSlice({
     receiveMessage: (state, { payload }) => {
       state.messages.unshift(payload);
     },
+    setNewEditMessageId: (state, { payload }) => {
+      state.editMessageId = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getConversationMessages.fulfilled, (state, { payload }) => {
@@ -60,5 +64,5 @@ const messagesSlice = createSlice({
   },
 });
 
-export const { receiveMessage } = messagesSlice.actions;
+export const { receiveMessage, setNewEditMessageId } = messagesSlice.actions;
 export default messagesSlice.reducer;

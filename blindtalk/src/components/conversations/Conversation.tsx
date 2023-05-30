@@ -6,6 +6,7 @@ import {
   getConversationMessages,
   receiveMessage,
   sendMessage,
+  setNewEditMessageId,
 } from "../../features/messages/messagesSlice";
 import {
   getConversationData,
@@ -17,6 +18,11 @@ import SideBar from "./SideBar";
 import SendMessageForm from "./SendMessageForm";
 import { EditMessageData } from "../../types";
 import { SocketContext } from "../../utils/SocketContext/SocketContext";
+
+interface IDataForEditingMesssage {
+  content: string;
+  messageId: number;
+}
 
 const Conversation = () => {
   const dispatch = useAppDispatch();
@@ -56,26 +62,37 @@ const Conversation = () => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesData.messages[0]]);
 
-  //Actions
+  //Edit message text
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleClick = (content: string) => {
+    inputRef.current!.value = content;
+  };
+
+  const handleEditMessage = (newData: EditMessageData) => {
+    dispatch(editMessage(newData));
+    inputRef.current!.value = "";
+    dispatch(setNewEditMessageId(0));
+  };
+
+  //Send message action
   let conversationId = conversationData.currentDialog?.id;
 
   const sendNewMessage = (content: string) => {
     if (conversationId) {
       dispatch(sendMessage({ content, conversationId }));
+      inputRef.current!.value = "";
     }
   };
 
-  const onEditMessage = (data: EditMessageData) => {
-    dispatch(editMessage(data));
-  };
-
+  //Messages
   const messages = messagesData.messages
     .map((message) => (
       <ConversationMessages
         key={message.id}
         {...message}
-        onEditMessage={onEditMessage}
         lastMessageRef={lastMessageRef}
+        handleClick={handleClick}
       />
     ))
     .reverse();
@@ -104,7 +121,11 @@ const Conversation = () => {
           <div className="mx-16 pr-5 h-[calc(100vh-308px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
             {messages}
           </div>
-          <SendMessageForm sendNewMessage={sendNewMessage} />
+          <SendMessageForm
+            sendNewMessage={sendNewMessage}
+            handleEditMessage={handleEditMessage}
+            inputRef={inputRef}
+          />
         </div>
       </div>
       <div className="lg:hidden">
@@ -153,10 +174,14 @@ const Conversation = () => {
                     .format("DD MMM YYYY")}
                 </div>
               </div>
-              <div className="px-4 h-[calc(100vh-170px)] overflow-y-scroll">
+              <div className="mx-2 px-2 h-[calc(100vh-170px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
                 {messages}
               </div>
-              <SendMessageForm sendNewMessage={sendNewMessage} />
+              <SendMessageForm
+                sendNewMessage={sendNewMessage}
+                handleEditMessage={handleEditMessage}
+                inputRef={inputRef}
+              />
             </div>
           </div>
         )}

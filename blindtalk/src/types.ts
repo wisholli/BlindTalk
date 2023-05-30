@@ -50,6 +50,7 @@ export type MessageData = {
 export type initialMessagesData = {
   id: number;
   messages: MessageData[];
+  editMessageId: number;
 };
 
 export type SendMessageData = {
@@ -65,8 +66,8 @@ export type RegisterData = {
 };
 
 export type MessagesProps = MessageData & {
-  onEditMessage: (data: EditMessageData) => void;
   lastMessageRef: LegacyRef<HTMLDivElement> | undefined;
+  handleClick: (content: string) => void;
 };
 
 export type EditMessageData = {

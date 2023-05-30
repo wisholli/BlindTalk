@@ -10,8 +10,6 @@ export const Header = () => {
   const conversationData = useAppSelector((state) => state.conversations);
   let id = conversationData.data[0]?.id;
 
-  console.log(conversationData.isChatSelected);
-
   return (
     <div
       className={`sticky top-0 z-10 px-4 pb-2 bg-white shadow-md lg:mb-10 lg:px-16 ${
