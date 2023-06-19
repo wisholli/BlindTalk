@@ -6,13 +6,13 @@ const initialState: initialUserData = {
   data: [],
 };
 
-export const getUsers = createAsyncThunk("people/getUsers", async function () {
+export const getUsers = createAsyncThunk("users/getUsers", async function () {
   const response = await usersApi.getUsers();
   return response.data;
 });
 
 const usersSlice = createSlice({
-  name: "people",
+  name: "users",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

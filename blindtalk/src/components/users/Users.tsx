@@ -6,18 +6,30 @@ import {
   createANewConversation,
   getConversations,
 } from "../../features/conversations/conversationsSlice";
+import {
+  getUserProfile,
+  getUsersProfiles,
+} from "../../features/users/profilesSlice";
 
 export const Users = () => {
   const dispatch = useAppDispatch();
-  const userData = useAppSelector((state) => state.users);
-  const conversationsData = useAppSelector((state) => state.conversations.data);
-  let users = [...userData.data];
-  let reverseUsers = users.reverse();
+  const usersProfiles = useAppSelector((state) => state.profiles.data);
+  const authData = useAppSelector((state) => state.auth);
+  const userData = useAppSelector((state) => state.users.data);
+
+  let currentUser = userData.filter((u) => u.id === authData.id);
 
   useEffect(() => {
     dispatch(getUsers());
     dispatch(getConversations());
-  }, [reverseUsers[0]]);
+    dispatch(getUsersProfiles());
+  }, []);
+
+  useEffect(() => {
+    if (currentUser[0]) {
+      dispatch(getUserProfile(currentUser[0].profileId));
+    }
+  }, [currentUser[0]?.profileId]);
 
   const message = "hi";
 
@@ -25,27 +37,22 @@ export const Users = () => {
     dispatch(createANewConversation({ message, recipientId }));
   };
 
-  const userForNewConversation = userData.data.filter(
-    (user) =>
-      !conversationsData.some(
-        (c) => c.creator.id === user.id || c.recipient.id === user.id
-      )
-  );
-
   return (
-    <div className="mx-auto w-5/6">
-      <div className=" box-content p-4 border-2 rounded-md mx-40">
-        <h1 className="text-center mt-5 mb-5 text-2xl">
+    <div className="mx-2 md:mx-10 lg:mx-32 xl:mx-52">
+      <div className="flex flex-col justify-center ">
+        <h1 className="font-pacifico font-normal text-center text-4xl text-black-100  mt-5 md:text-6xl md:mb-5 lg:mb-14 lg:mt-0">
           Find your new friend!
         </h1>
-        <div className="overflow-y-scroll">
-          {userForNewConversation.map((user) => (
-            <UserInfo
-              key={user.id}
-              {...user}
-              createConversation={createConversation}
-            />
-          ))}
+        <div className="mt-10 h-[calc(100vh-180px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg px-2 md:h-[calc(100vh-204px)] md:mt-5 lg:h-[calc(100vh-240px)] lg:mt-0">
+          {usersProfiles.map((p) => {
+            return (
+              <UserInfo
+                key={p.id}
+                {...p}
+                createConversation={createConversation}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
