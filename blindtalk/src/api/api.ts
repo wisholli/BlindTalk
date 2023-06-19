@@ -5,6 +5,9 @@ import {
   NewConversationData,
   RegisterData,
   SendMessageData,
+  UserData,
+  UserProfile,
+  UserProfileInfoForUpdate,
 } from "../types";
 
 const instance = axios.create({
@@ -27,6 +30,9 @@ export const authApi = {
 export const usersApi = {
   getUsers() {
     return instance.get("/users");
+  },
+  updateUser(data: Omit<UserData, "email" | "profileId">) {
+    return instance.patch("/users", data);
   },
 };
 
@@ -51,5 +57,20 @@ export const messagesApi = {
   },
   editMessage(data: EditMessageData) {
     return instance.patch("messages", data);
+  },
+};
+
+export const profilesApi = {
+  getProfiles() {
+    return instance.get(`profiles`);
+  },
+  getUserProfile(id: number) {
+    return instance.get(`profiles/${id}`);
+  },
+  editUserProfile(data: UserProfileInfoForUpdate) {
+    return instance.patch(`profiles/${data.id}`, data);
+  },
+  deleteUserProfile(id: number) {
+    return instance.delete(`profiles/${id}`);
   },
 };

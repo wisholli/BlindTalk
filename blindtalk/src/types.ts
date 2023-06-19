@@ -1,5 +1,7 @@
 import { LegacyRef } from "react";
+import { ICountry, ICity } from "country-state-city";
 
+// auth data
 export type AuthData = {
   email: string;
   password: string;
@@ -10,17 +12,28 @@ export type initialAuthData = {
   email: string;
 };
 
+export type RegisterData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  sex: Sex;
+};
+
+//users data
 export type UserData = {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
+  profileId: number;
 };
 
 export type initialUserData = {
   data: UserData[];
 };
 
+//conversations data
 type ConversationData = {
   creator: UserData;
   recipient: UserData;
@@ -40,6 +53,7 @@ export type NewConversationData = {
   message: string;
 };
 
+//messages data
 export type MessageData = {
   id: number;
   content: string;
@@ -58,13 +72,6 @@ export type SendMessageData = {
   content: string;
 };
 
-export type RegisterData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-};
-
 export type MessagesProps = MessageData & {
   lastMessageRef: LegacyRef<HTMLDivElement> | undefined;
   handleClick: (content: string) => void;
@@ -75,7 +82,44 @@ export type EditMessageData = {
   content: string;
 };
 
+//checkbox data
 export type ActiveCheckBox = {
   male: boolean;
   female: boolean;
+};
+
+//users profiles data
+export enum Sex {
+  male = "male",
+  female = "female",
+  none = "",
+}
+
+export type UserProfile = {
+  id: number;
+  city: string | null;
+  country: string | null;
+  birthDay: string | null;
+  sex: Sex;
+  status: string | null;
+  avatarUrl: string | null;
+  user: Omit<UserData, "id" | "email">;
+};
+
+export type initialProfilesData = {
+  data: UserProfile[];
+  currentUserProfile: UserProfile | null;
+  userForUpdate: Omit<UserData, "email" | "profileId"> | null;
+};
+
+export type UserProfileInfoForUpdate = {
+  id?: number;
+  birthDay?: string | null;
+  city?: string | null;
+  country?: string | null;
+  sex?: Sex;
+  status?: string | null;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string | null;
 };

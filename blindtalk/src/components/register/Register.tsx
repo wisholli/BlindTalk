@@ -14,7 +14,7 @@ const Register = () => {
   };
 
   if (authData.id) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={`/profile/${authData.id}`} />;
   }
 
   return <RegisterForm onRegister={onRegister} />;

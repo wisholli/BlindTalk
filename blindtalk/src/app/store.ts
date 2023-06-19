@@ -3,6 +3,7 @@ import conversationsSlice from "../features/conversations/conversationsSlice";
 import authSlice from "../features/login/authSlice";
 import messagesSlice from "../features/messages/messagesSlice";
 import usersSlice from "../features/users/usersSlice";
+import usersProfilesSlice from "../features/users/profilesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     users: usersSlice,
     conversations: conversationsSlice,
     messages: messagesSlice,
+    profiles: usersProfilesSlice,
   },
 });
 

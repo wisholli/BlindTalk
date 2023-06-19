@@ -7,7 +7,13 @@ import { useAppSelector } from "../../app/hooks";
 
 export const Header = () => {
   const [isToggled, setToggle] = useState<boolean>(false);
+  const [isProfile, setIsProfile] = useState<boolean>(false);
+
   const conversationData = useAppSelector((state) => state.conversations);
+  const currentUserProfile = useAppSelector(
+    (state) => state.profiles.currentUserProfile
+  );
+
   let id = conversationData.data[0]?.id;
 
   return (
@@ -25,7 +31,7 @@ export const Header = () => {
           >
             <img src={menuIcon} alt="mobile-menu-icon" className="mt-3 h-8" />
           </button>
-          <div className="hidden md:block space-x-5">
+          <div className="hidden space-x-5 md:flex md:gap-5 md:items-center">
             <NavLink
               to={"/"}
               className="font-maven font-normal text-2xl text-black-100"
@@ -38,6 +44,28 @@ export const Header = () => {
             >
               Conversations
             </NavLink>
+            <div className="relative">
+              <button onClick={() => setIsProfile(!isProfile)}>
+                {currentUserProfile?.avatarUrl !== null && (
+                  <img
+                    src={currentUserProfile?.avatarUrl}
+                    alt="profile-icon"
+                    className="h-10 w-10 rounded-full"
+                  />
+                )}
+              </button>
+              {isProfile && (
+                <div className="absolute right-5 top-10 bg-green-100 shadow-md shadow-black/30 rounded-b-md rounded-tl-md py-1 px-5">
+                  <button onClick={() => setIsProfile(!isProfile)}>
+                    <NavLink to={`/profile/${currentUserProfile?.id}`}>
+                      <p className="m-0 font-maven font-normal text-lg text-white">
+                        Profile
+                      </p>
+                    </NavLink>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         {isToggled && (
@@ -66,6 +94,14 @@ export const Header = () => {
                   className="font-maven font-normal text-2xl text-black-100"
                 >
                   Conversations
+                </NavLink>
+              </button>
+              <button onClick={() => setToggle(false)}>
+                <NavLink
+                  to={`/profile/${currentUserProfile?.id}`}
+                  className="font-maven font-normal text-2xl text-black-100"
+                >
+                  Profile
                 </NavLink>
               </button>
             </div>
