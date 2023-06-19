@@ -4,15 +4,13 @@ import { login } from "../../features/login/authSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Navigate } from "react-router-dom";
 
-type Props = {};
-
-const Login = (props: Props) => {
+const Login = () => {
   const dispatch = useAppDispatch();
+  const authData = useAppSelector((state) => state.auth);
+
   const onLogin = ({ email, password }: AuthData) => {
     dispatch(login({ email, password }));
   };
-
-  const authData = useAppSelector((state) => state.auth);
 
   if (authData.id) {
     return <Navigate to={"/"} />;
