@@ -10,12 +10,14 @@ import {
   getUserProfile,
   getUsersProfiles,
 } from "../../features/users/profilesSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Users = () => {
   const dispatch = useAppDispatch();
   const usersProfiles = useAppSelector((state) => state.profiles.data);
   const authData = useAppSelector((state) => state.auth);
   const userData = useAppSelector((state) => state.users.data);
+  const conversations = useAppSelector((state) => state.conversations.data);
 
   let currentUser = userData.filter((u) => u.id === authData.id);
 
@@ -33,9 +35,29 @@ export const Users = () => {
 
   const message = "hi";
 
+  //action and redirect to conversation page after creating conversation
+  const navigate = useNavigate();
   const createConversation = (recipientId: number) => {
-    dispatch(createANewConversation({ message, recipientId }));
+    dispatch(createANewConversation({ message, recipientId })).then((value) => {
+      if (value.payload?.id) {
+        navigate(`/conversation/${value.payload?.id}`);
+      }
+    });
   };
+
+  //users without current user
+  let usersWithoutCurrentUser = usersProfiles.filter(
+    (p) => p.id !== currentUser[0].profileId
+  );
+
+  //users without conversation with current user
+  let creatorsAndRecipients = conversations.map(
+    (c) => (c.creator.id, c.recipient.id)
+  );
+
+  let usersWithoutConversationWithCurrentUser = usersWithoutCurrentUser.filter(
+    (u) => !creatorsAndRecipients.includes(u.id)
+  );
 
   return (
     <div className="mx-2 md:mx-10 lg:mx-32 xl:mx-52">
@@ -44,7 +66,7 @@ export const Users = () => {
           Find your new friend!
         </h1>
         <div className="mt-10 h-[calc(100vh-180px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg px-2 md:h-[calc(100vh-204px)] md:mt-5 lg:h-[calc(100vh-240px)] lg:mt-0">
-          {usersProfiles.map((p) => {
+          {usersWithoutConversationWithCurrentUser.map((p) => {
             return (
               <UserInfo
                 key={p.id}
