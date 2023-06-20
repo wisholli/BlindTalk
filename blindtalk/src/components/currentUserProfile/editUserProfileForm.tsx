@@ -33,7 +33,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
       birthDay: currentUserProfile!.birthDay,
       city: currentUserProfile!.city,
       country: currentUserProfile!.country,
-      sex: Sex.none,
+      sex: currentUserProfile!.sex,
       status: currentUserProfile!.status,
       firstName: currentUser[0].user!.firstName,
       lastName: currentUser[0].user!.lastName,
@@ -60,10 +60,12 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
     }
   };
 
+  console.log(formik.values.sex);
+
   return (
     <form onSubmit={formik.handleSubmit} className="w-[600px]">
       <div className="flex flex-col gap-9">
-        <div className="flex justify-center gap-14 items-center ">
+        <div className="flex justify-center gap-5 items-center ">
           <div className="w-1/2">
             <input
               id="firstName"
@@ -92,6 +94,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               name="birthDay"
               type="text"
               value={formik.values.birthDay!}
+              placeholder="Birthday"
               onChange={formik.handleChange}
               className="w-full bg-white outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
             />
@@ -105,10 +108,19 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               >
                 Sex
               </label>
-              <CheckBox
-                activeCheckBoxes={activeCheckBoxes}
-                checkBoxNumber="male"
-                toggleIndex={toggleIndex}
+
+              <input
+                type="radio"
+                id="male"
+                name="male"
+                value={Sex.male}
+                checked={formik.values.sex === Sex.male}
+                onChange={() => formik.setFieldValue("sex", Sex.male)}
+                className={`form-radio cursor-pointer flex items-center justify-center border h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 ${
+                  formik.values.sex === Sex.male
+                    ? "text-green-100"
+                    : " text-white"
+                }`}
               />
 
               <label
@@ -117,10 +129,19 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               >
                 M
               </label>
-              <CheckBox
-                activeCheckBoxes={activeCheckBoxes}
-                checkBoxNumber="female"
-                toggleIndex={toggleIndex}
+
+              <input
+                type="radio"
+                id="female"
+                name="female"
+                value={Sex.female}
+                checked={formik.values.sex === Sex.female}
+                onChange={() => formik.setFieldValue("sex", Sex.female)}
+                className={`form-radio cursor-pointer flex items-center justify-center border h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 ${
+                  formik.values.sex === Sex.female
+                    ? "text-green-100"
+                    : " text-white"
+                }`}
               />
 
               <label
@@ -138,6 +159,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               name="country"
               type="text"
               value={formik.values.country!}
+              placeholder="Country"
               onChange={formik.handleChange}
               className="w-full bg-white outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
             />
@@ -149,6 +171,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               name="city"
               type="text"
               value={formik.values.city!}
+              placeholder="City"
               onChange={formik.handleChange}
               className="w-full bg-white outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
             />
@@ -160,6 +183,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
             id="status"
             name="status"
             value={formik.values.status!}
+            placeholder="Please enter your status"
             onChange={formik.handleChange}
             className="w-full resize-none bg-white outline-none font-maven font-normal text-3xl text-center text-gray-100"
           />

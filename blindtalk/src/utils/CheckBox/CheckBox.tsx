@@ -1,4 +1,3 @@
-import { useAppSelector } from "../../app/hooks";
 import { ActiveCheckBox } from "../../types";
 
 interface Props {
