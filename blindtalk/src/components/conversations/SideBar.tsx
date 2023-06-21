@@ -16,7 +16,7 @@ const SideBar = ({ conversationId, recipient, creator, setToggle }: Props) => {
 
   const userList =
     Number(id) === conversationId ? (
-      <div className="px-4 py-2 bg-green-100 bg-opacity-70 border-b-2 border-white shadow-sm lg:border-b-gray-400 lg:border-l-[15px] lg:border-r-2 lg:border-r-gray-400 lg:border-l-green-100 lg:bg-white lg:shadow-none">
+      <div className=" px-4 py-2 bg-green-100 bg-opacity-70 border-b-2 border-white shadow-sm lg:border-b-gray-400 lg:border-l-[15px] lg:border-r-2 lg:border-r-gray-400 lg:border-l-green-100 lg:bg-white lg:shadow-none">
         <button onClick={setToggle}>
           <NavLink
             to={"/conversation/" + conversationId}

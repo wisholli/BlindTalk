@@ -100,15 +100,17 @@ const Conversation = () => {
   return (
     <div>
       <div className="hidden w-full lg:flex">
-        <div className="border-t-2 border-gray-400 w-1/4">
-          {conversationData.data.map((dialog) => (
-            <SideBar
-              key={dialog.id}
-              conversationId={dialog.id}
-              recipient={dialog.recipient}
-              creator={dialog.creator}
-            />
-          ))}
+        <div className=" w-1/4 pr-2 overflow-y-scroll h-[calc(100vh-124px)] scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
+          <div className="border-t-2 border-gray-400">
+            {conversationData.data.map((dialog) => (
+              <SideBar
+                key={dialog.id}
+                conversationId={dialog.id}
+                recipient={dialog.recipient}
+                creator={dialog.creator}
+              />
+            ))}
+          </div>
         </div>
         <div className="w-5/6 flex flex-col gap-5">
           <div className="flex items-center justify-center">
@@ -129,7 +131,11 @@ const Conversation = () => {
         </div>
       </div>
       <div className="lg:hidden">
-        <div className={` ${conversationData.isChatSelected && "hidden"}`}>
+        <div
+          className={` ${
+            conversationData.isChatSelected && "hidden"
+          } overflow-y-scroll h-[calc(100vh-58px)]`}
+        >
           {conversationData.data.map((dialog) => (
             <SideBar
               key={dialog.id}
