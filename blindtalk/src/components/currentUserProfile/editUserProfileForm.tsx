@@ -1,13 +1,7 @@
-import { useState } from "react";
 import { useFormik } from "formik";
-import {
-  ActiveCheckBox,
-  Sex,
-  UserData,
-  UserProfileInfoForUpdate,
-} from "../../types";
+import { Sex, UserProfileInfoForUpdate } from "../../types";
 import { useAppSelector } from "../../app/hooks";
-import { CheckBox } from "../../utils/CheckBox/CheckBox";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
 type Props = {
   setIsEditMode: () => void;
@@ -44,23 +38,6 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
       onEditMode(values);
     },
   });
-
-  //checkboxes functions
-  const [activeCheckBoxes, setActiveIndex] = useState<ActiveCheckBox>({
-    female: false,
-    male: false,
-  });
-
-  const toggleIndex = (index: string) => {
-    setActiveIndex((prev: any) => ({ ...prev, [index]: !prev[index] }));
-    if (index === "male") {
-      formik.values.sex = Sex.male;
-    } else {
-      formik.values.sex = Sex.female;
-    }
-  };
-
-  console.log(formik.values.sex);
 
   return (
     <form onSubmit={formik.handleSubmit} className="w-[600px]">
@@ -154,26 +131,22 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
           </div>
 
           <div className="w-[calc(100%/2-10px)]">
-            <input
-              id="country"
-              name="country"
-              type="text"
-              value={formik.values.country!}
-              placeholder="Country"
-              onChange={formik.handleChange}
-              className="w-full bg-white outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
+            <CountryDropdown
+              value={formik.values.country || ""}
+              onChange={(val: string) => formik.setFieldValue("country", val)}
+              priorityOptions={["CA", "US", "GB"]}
+              classes="w-full outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
             />
           </div>
 
           <div className="w-[calc(100%/2-10px)]">
-            <input
-              id="city"
-              name="city"
-              type="text"
-              value={formik.values.city!}
-              placeholder="City"
-              onChange={formik.handleChange}
-              className="w-full bg-white outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
+            <RegionDropdown
+              country={formik.values.country || ""}
+              value={formik.values.city || ""}
+              onChange={(val: string) => {
+                formik.setFieldValue("city", val);
+              }}
+              classes="w-full outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
             />
           </div>
         </div>
