@@ -45,13 +45,7 @@ export const updateUserLastNameFirstName = createAsyncThunk(
 const usersProfilesSlice = createSlice({
   name: "usersProfiles",
   initialState,
-  reducers: {
-    getUserForUpdate(state, { payload }) {
-      let user = state.data.filter((u) => u.id === payload.id);
-      state.userForUpdate!.firstName = user[0].user.firstName;
-      state.userForUpdate!.lastName = user[0].user.lastName;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUsersProfiles.fulfilled, (state, { payload }) => {
       state.data = payload;
@@ -77,5 +71,4 @@ const usersProfilesSlice = createSlice({
   },
 });
 
-export const { getUserForUpdate } = usersProfilesSlice.actions;
 export default usersProfilesSlice.reducer;

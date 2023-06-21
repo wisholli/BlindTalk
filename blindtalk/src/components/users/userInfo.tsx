@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { UserProfile } from "../../types";
 
 interface Props extends UserProfile {
@@ -28,14 +29,16 @@ export const UserInfo = ({
           className="rounded-full h-32 w-32 sm:h-56 sm:w-56 lg:h-64 lg:w-64 xl:h-80 xl:w-80"
         />
         <div className="flex flex-col md:w-[calc(100vw-(40px*2+56px+224px))] lg:w-[calc(100vw-(128px*2+80px+256px))] xl:w-[calc(100vw-(208px*2+80px+320px))]">
-          <div className="flex gap-2 justify-center items-center mb-4 md:mb-4">
-            <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-5xl">
-              {user?.firstName}
-            </p>
-            <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-5xl">
-              {user?.lastName}
-            </p>
-          </div>
+          <NavLink to={`/profile/${id}`}>
+            <div className="flex gap-2 justify-center items-center mb-4 md:mb-4">
+              <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-5xl">
+                {user?.firstName}
+              </p>
+              <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-5xl">
+                {user?.lastName}
+              </p>
+            </div>
+          </NavLink>
           <div className="flex justify-center items-center gap-6 mb-4 md:mb-9 lg:gap-8">
             {sex ? (
               <p className="m-0 font-maven font-normal text-lg text-black-100 text-center md:text-xl lg:text-2xl">

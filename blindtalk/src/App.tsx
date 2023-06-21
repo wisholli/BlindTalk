@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "./components/header/Header";
 import Conversation from "./components/conversations/Conversation";
 import { Users } from "./components/users/Users";
-import { CurrentUserProfile } from "./components/currentUserProfile/currentUserProfile";
 import { useEffect } from "react";
 import { getAuthStatus } from "./features/login/authSlice";
 import { useAppDispatch } from "./app/hooks";

@@ -66,11 +66,11 @@ export const Users = () => {
           Find your new friend!
         </h1>
         <div className="mt-10 h-[calc(100vh-180px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg px-2 md:h-[calc(100vh-204px)] md:mt-5 lg:h-[calc(100vh-240px)] lg:mt-0">
-          {usersWithoutConversationWithCurrentUser.map((p) => {
+          {usersWithoutConversationWithCurrentUser.map((u) => {
             return (
               <UserInfo
-                key={p.id}
-                {...p}
+                key={u.id}
+                {...u}
                 createConversation={createConversation}
               />
             );
