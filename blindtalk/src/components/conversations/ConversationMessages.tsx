@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setNewEditMessageId } from "../../features/messages/messagesSlice";
 import { MessagesProps } from "../../types";
 import moment from "moment";
-import editMessageIcon from "../../assets/images/edit-message-icon.svg";
 
 export const ConversationMessages = ({
   author,

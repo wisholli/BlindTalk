@@ -112,16 +112,27 @@ const Conversation = () => {
             ))}
           </div>
         </div>
-        <div className="w-5/6 flex flex-col gap-5">
-          <div className="flex items-center justify-center">
-            <div className="font-maven font-normal text-xl text-black-100 border-b-2 border-black-200 border-opacity-60">
-              {moment(conversationData.currentDialog?.createdAt)
-                .utc()
-                .format("DD MMM YYYY")}
+        <div className="w-5/6 flex flex-col justify-between gap-5">
+          {messages[0] && (
+            <div className="flex items-center justify-center">
+              <div className="font-maven font-normal text-xl text-black-100 border-b-2 border-black-200 border-opacity-60">
+                {moment(conversationData.currentDialog?.createdAt)
+                  .utc()
+                  .format("DD MMM YYYY")}
+              </div>
             </div>
-          </div>
+          )}
+
           <div className="mx-16 pr-5 h-[calc(100vh-308px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
-            {messages}
+            {messages[0] ? (
+              messages
+            ) : (
+              <div className="flex justify-center mt-56">
+                <p className="font-pacifico text-black-100 text-4xl">
+                  Send your first message
+                </p>
+              </div>
+            )}
           </div>
           <SendMessageForm
             sendNewMessage={sendNewMessage}
