@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <div
-      className={`sticky top-0 z-10 px-4 pb-2 bg-white shadow-md lg:mb-10 lg:px-16 ${
+      className={`sticky top-0 z-10 px-4 pb-2 bg-white shadow-md md:mb-7 lg:mb-10 lg:px-16 ${
         conversationData.isChatSelected && "hidden"
       }`}
     >

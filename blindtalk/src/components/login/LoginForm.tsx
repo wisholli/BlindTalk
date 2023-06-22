@@ -1,6 +1,9 @@
 import { Formik, Form, Field } from "formik";
 import { AuthData } from "../../types";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import eyeIcon from "../../assets/images/eye-icon.svg";
+import eyeOffIcon from "../../assets/images/eye-off-icon.svg";
 
 type Props = {
   onLogin: ({ email, password }: AuthData) => void;
@@ -12,6 +15,10 @@ interface MyFormValues {
 }
 
 export const LoginForm = ({ onLogin }: Props) => {
+  //show and hide password
+  let [isPassword, setIsPassword] = useState<boolean>(false);
+  console.log(isPassword);
+
   const initialValues: MyFormValues = { email: "", password: "" };
   return (
     <div className=" mt-24 mx-4 md:mx-36 lg:mt-32 lg:mx-96">
@@ -31,12 +38,23 @@ export const LoginForm = ({ onLogin }: Props) => {
             placeholder="Email"
             className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200 mb-8 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl lg:mb-16 "
           />
-          <Field
-            id="password"
-            name="password"
-            placeholder="Password"
-            className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200 mb-8 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl lg:mb-16"
-          />
+          <div className="flex justify-between items-center border-b border-black-200 mb-8 lg:mb-16">
+            <Field
+              id="password"
+              name="password"
+              type={isPassword ? "text" : "password"}
+              placeholder="Password"
+              className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl "
+            />
+            <button type="button" onClick={() => setIsPassword(!isPassword)}>
+              <img
+                src={isPassword ? eyeOffIcon : eyeIcon}
+                alt="eye-icon"
+                className="h-10 w-10"
+              />
+            </button>
+          </div>
+
           <div className="flex justify-center">
             <button
               type="submit"

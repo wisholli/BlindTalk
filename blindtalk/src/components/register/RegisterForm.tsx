@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import { NavLink } from "react-router-dom";
 import { ActiveCheckBox, RegisterData, Sex } from "../../types";
 import { CheckBox } from "../../utils/CheckBox/CheckBox";
+import eyeIcon from "../../assets/images/eye-icon.svg";
+import eyeOffIcon from "../../assets/images/eye-off-icon.svg";
 
 type Props = {
   onRegister: (data: RegisterData) => void;
@@ -22,6 +24,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
     },
   });
 
+  //checkboxes functions
   const [activeCheckBoxes, setActiveIndex] = useState<ActiveCheckBox>({
     female: false,
     male: false,
@@ -36,13 +39,16 @@ export const RegisterForm = ({ onRegister }: Props) => {
     }
   };
 
+  //show and hide password
+  const [isPassword, setIsPassword] = useState<boolean>(false);
+
   return (
     <div className="flex items-center justify-center">
       <form
         onSubmit={formik.handleSubmit}
         className="w-full mx-4 sm:w-[calc(100%-(69px*2))]  md:w-[calc(100%-(139px*2))]  xl:w-[calc(100%-(278px*2))] "
       >
-        <h1 className="text-center font-pacifico font-normal text-4xl mb-10 text-black-200 md:text-5xl lg:text-6xl lg:mb-12">
+        <h1 className="text-center font-pacifico font-normal text-4xl mb-10 mt-7 text-black-200 md:mt-0 md:text-5xl lg:text-6xl lg:mb-12">
           Register and join us!
         </h1>
         <div className="flex flex-wrap justify-between">
@@ -76,16 +82,23 @@ export const RegisterForm = ({ onRegister }: Props) => {
               className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
             />
           </div>
-          <div className="w-full mb-10 lg:w-[calc(100%/2-63px/2)]">
+          <div className="flex justify-between items-center w-full mb-10 border-b border-black-200 lg:w-[calc(100%/2-63px/2)]">
             <input
               id="password"
               name="password"
               placeholder="Password"
               onChange={formik.handleChange}
               value={formik.values.password}
-              type="password"
-              className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+              type={isPassword ? "text" : "password"}
+              className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
             />
+            <button onClick={() => setIsPassword(!isPassword)}>
+              <img
+                src={isPassword ? eyeOffIcon : eyeIcon}
+                alt="eyeIcon"
+                className="h-10 w-10"
+              />
+            </button>
           </div>
           <div className="flex justify-center w-full">
             <div className="w-full lg:w-[calc(100%/2-300px/2)] mb-5  md:mb-10 flex flex-row justify-center items-center border-b border-black-200 ">
