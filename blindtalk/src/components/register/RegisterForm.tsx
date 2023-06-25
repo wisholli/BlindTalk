@@ -10,24 +10,6 @@ type Props = {
   onRegister: (data: RegisterData) => void;
 };
 
-const validate = (values: RegisterData) => {
-  const errors = {
-    email: "",
-    password: "",
-  };
-
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-  if (!values.password) {
-    errors.password = "Required";
-  }
-
-  return errors;
-};
-
 export const RegisterForm = ({ onRegister }: Props) => {
   const formik = useFormik<RegisterData>({
     initialValues: {
@@ -37,7 +19,6 @@ export const RegisterForm = ({ onRegister }: Props) => {
       lastName: "",
       sex: Sex.none,
     },
-    validate,
     onSubmit: (values) => {
       onRegister(values);
     },
@@ -91,7 +72,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
               className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
             />
           </div>
-          <div className=" w-full mb-10 lg:w-[calc(100%/2-63px/2)]">
+          <div className="w-full mb-10 lg:w-[calc(100%/2-63px/2)]">
             <input
               id="email"
               name="email"
@@ -100,41 +81,27 @@ export const RegisterForm = ({ onRegister }: Props) => {
               value={formik.values.email}
               className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
             />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="font-maven font-normal text-lg text-red-500">
-                {formik.errors.email}
-              </div>
-            ) : null}
           </div>
-          <div className=" w-full mb-10 lg:w-[calc(100%/2-63px/2)]">
-            <div className="flex justify-between items-center  border-b border-black-200">
-              <input
-                id="password"
-                name="password"
-                placeholder="Password"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-                type={isPassword ? "text" : "password"}
-                className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+          <div className="flex justify-between items-center w-full mb-10 border-b border-black-200 lg:w-[calc(100%/2-63px/2)]">
+            <input
+              id="password"
+              name="password"
+              placeholder="Password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              type={isPassword ? "text" : "password"}
+              className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+            />
+            <button onClick={() => setIsPassword(!isPassword)}>
+              <img
+                src={isPassword ? eyeOffIcon : eyeIcon}
+                alt="eyeIcon"
+                className="h-10 w-10"
               />
-              <button type="button" onClick={() => setIsPassword(!isPassword)}>
-                <img
-                  src={isPassword ? eyeOffIcon : eyeIcon}
-                  alt="eyeIcon"
-                  className="h-10 w-10"
-                />
-              </button>
-            </div>
-
-            {formik.touched.password && formik.errors.password ? (
-              <div className="font-maven font-normal text-lg text-red-500">
-                {formik.errors.password}
-              </div>
-            ) : null}
+            </button>
           </div>
-
           <div className="flex justify-center w-full">
-            <div className="w-full lg:w-[calc(100%/2-300px/2)] mb-5  md:mb-10 flex flex-row justify-center items-center border-b border-black-200">
+            <div className="w-full lg:w-[calc(100%/2-300px/2)] mb-5  md:mb-10 flex flex-row justify-center items-center border-b border-black-200 ">
               <label
                 htmlFor="sex"
                 className="font-maven font-normal text-gray-100 text-2xl mr-5 md:text-3xl md:mr-10"

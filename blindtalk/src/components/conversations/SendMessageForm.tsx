@@ -21,7 +21,7 @@ export const SendMessageForm = ({
     },
     onSubmit: (values, { resetForm }) => {
       let content = values.content;
-      if (messageId !== 0 && messageId) {
+      if (messageId) {
         return handleEditMessage({ messageId, content });
       }
       sendNewMessage(content);

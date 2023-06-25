@@ -11,6 +11,7 @@ import {
   getUsersProfiles,
 } from "../../features/users/profilesSlice";
 import { useNavigate } from "react-router-dom";
+import { ConversationData } from "../../types";
 
 export const Users = () => {
   const dispatch = useAppDispatch();
@@ -39,11 +40,10 @@ export const Users = () => {
   const navigate = useNavigate();
   const createConversation = (recipientId: number) => {
     dispatch(createANewConversation({ message, recipientId })).then((value) => {
-      console.log(value);
-
-      // if (value.payload) {
-      //   navigate(`/conversation/${value.payload.id}`);
-      // }
+      if (value.payload) {
+        let { id } = value.payload as ConversationData;
+        navigate(`/conversation/${id}`);
+      }
     });
   };
 
