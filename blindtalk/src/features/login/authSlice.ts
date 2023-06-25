@@ -15,11 +15,11 @@ export const login = createAsyncThunk<void, AuthData>(
   }
 );
 
-export const getAuthStatus = createAsyncThunk(
+export const getAuthStatus = createAsyncThunk<initialAuthData>(
   "auth/getAuthStatus",
   async function () {
     const response = await authApi.getAuthStatus();
-    const { id, email } = response.data;
+    const { id, email }: initialAuthData = response.data;
     return { id, email };
   }
 );
@@ -41,13 +41,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      getAuthStatus.fulfilled,
-      (state, { payload }: PayloadAction<initialAuthData>) => {
-        state.id = payload.id;
-        state.email = payload.email;
-      }
-    );
+    builder.addCase(getAuthStatus.fulfilled, (state, { payload }) => {
+      state.id = payload.id;
+      state.email = payload.email;
+    });
   },
 });
 

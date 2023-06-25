@@ -1,4 +1,4 @@
-import { UserData } from "./../../types";
+import { UserData, UserProfile } from "./../../types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { UserProfileInfoForUpdate, initialProfilesData } from "../../types";
 import { profilesApi, usersApi } from "../../api/api";
@@ -25,7 +25,10 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
-export const updateUserProfile = createAsyncThunk(
+export const updateUserProfile = createAsyncThunk<
+  UserProfileInfoForUpdate,
+  UserProfileInfoForUpdate
+>(
   "usersProfiles/updateUserProfile",
   async function (data: UserProfileInfoForUpdate) {
     const response = await profilesApi.editUserProfile(data);
@@ -56,8 +59,8 @@ const usersProfilesSlice = createSlice({
     builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
       let { id } = payload;
       let userForUpdate = state.data.filter((u) => u.id === id);
-      userForUpdate[0] = payload;
-      state.currentUserProfile = payload;
+      userForUpdate[0] = payload as UserProfile;
+      state.currentUserProfile = payload as UserProfile;
     });
     builder.addCase(
       updateUserLastNameFirstName.fulfilled,

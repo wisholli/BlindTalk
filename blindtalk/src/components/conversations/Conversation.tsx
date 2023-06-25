@@ -19,11 +19,6 @@ import SendMessageForm from "./SendMessageForm";
 import { EditMessageData } from "../../types";
 import { SocketContext } from "../../utils/SocketContext/SocketContext";
 
-interface IDataForEditingMesssage {
-  content: string;
-  messageId: number;
-}
-
 const Conversation = () => {
   const dispatch = useAppDispatch();
   const conversationData = useAppSelector((state) => state.conversations);

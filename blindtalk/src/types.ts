@@ -1,5 +1,4 @@
 import { LegacyRef } from "react";
-import { ICountry, ICity } from "country-state-city";
 
 // auth data
 export type AuthData = {
@@ -34,23 +33,24 @@ export type initialUserData = {
 };
 
 //conversations data
-type ConversationData = {
+export type ConversationData = {
   creator: UserData;
   recipient: UserData;
   id: number;
   createdAt: string;
-  messages: MessageData[];
+};
+
+export type NewConversationData = {
+  creator?: UserData;
+  recipientId: number;
+  message: string;
+  createdAt?: string;
 };
 
 export type initialConversationsData = {
   data: ConversationData[];
   currentDialog: null | ConversationData;
   isChatSelected: boolean;
-};
-
-export type NewConversationData = {
-  recipientId: number;
-  message: string;
 };
 
 //messages data
@@ -64,7 +64,7 @@ export type MessageData = {
 export type initialMessagesData = {
   id: number;
   messages: MessageData[];
-  editMessageId: number;
+  editMessageId?: number;
 };
 
 export type SendMessageData = {

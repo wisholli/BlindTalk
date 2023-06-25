@@ -39,9 +39,11 @@ export const Users = () => {
   const navigate = useNavigate();
   const createConversation = (recipientId: number) => {
     dispatch(createANewConversation({ message, recipientId })).then((value) => {
-      if (value.payload?.id) {
-        navigate(`/conversation/${value.payload?.id}`);
-      }
+      console.log(value);
+
+      // if (value.payload) {
+      //   navigate(`/conversation/${value.payload.id}`);
+      // }
     });
   };
 

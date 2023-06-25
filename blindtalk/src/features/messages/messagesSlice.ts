@@ -12,14 +12,14 @@ const initialState: initialMessagesData = {
   editMessageId: 0,
 };
 
-export const getConversationMessages = createAsyncThunk(
-  "messages/getConversationMessages",
-  async function (conversationId: string) {
-    const response = await messagesApi.getMessages(conversationId);
-    const { id, messages } = response.data;
-    return { id, messages };
-  }
-);
+export const getConversationMessages = createAsyncThunk<
+  initialMessagesData,
+  string
+>("messages/getConversationMessages", async function (conversationId: string) {
+  const response = await messagesApi.getMessages(conversationId);
+  const { id, messages } = response.data;
+  return { id, messages };
+});
 
 export const sendMessage = createAsyncThunk(
   "messages/sendMessage",

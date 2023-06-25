@@ -54,8 +54,8 @@ export const ProfilePage = () => {
   }
 
   let headlineForSelectedUser = [
-    selectedUser[0].user.firstName,
-    selectedUser[0].user.lastName,
+    selectedUser[0]?.user.firstName,
+    selectedUser[0]?.user.lastName,
     "profile",
   ];
 
@@ -80,20 +80,15 @@ export const ProfilePage = () => {
       </div>
 
       <div className="flex w-full items-center">
-        {selectedUser[0].id && (
+        {selectedUser[0]?.id && (
           <div className="flex justify-start w-1/2">
             <div className="flex flex-col gap-9 items-center ">
-              {selectedUser[0].avatarUrl != null && (
+              {selectedUser[0]?.avatarUrl != null && (
                 <img
-                  src={selectedUser[0].avatarUrl}
+                  src={selectedUser[0]?.avatarUrl}
                   alt="user-photo"
                   className="rounded-full h-96 w-96"
                 />
-              )}
-              {Number(id) === athorizedUserId && (
-                <button className="bg-green-100 py-2 px-28 rounded-3xl font-maven font-medium text-3xl text-white">
-                  Edit photo
-                </button>
               )}
             </div>
           </div>

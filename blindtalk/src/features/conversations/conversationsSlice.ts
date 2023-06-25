@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { initialConversationsData, NewConversationData } from "../../types";
+import {
+  ConversationData,
+  NewConversationData,
+  initialConversationsData,
+} from "../../types";
 import { converationsApi } from "../../api/api";
 
 const initialState: initialConversationsData = {
@@ -8,7 +12,10 @@ const initialState: initialConversationsData = {
   isChatSelected: false,
 };
 
-export const createANewConversation = createAsyncThunk(
+export const createANewConversation = createAsyncThunk<
+  ConversationData,
+  NewConversationData
+>(
   "conversations/createNewConversation",
   async function (data: NewConversationData) {
     const response = await converationsApi.createANewConversation(data);
@@ -16,7 +23,7 @@ export const createANewConversation = createAsyncThunk(
   }
 );
 
-export const getConversations = createAsyncThunk(
+export const getConversations = createAsyncThunk<ConversationData[]>(
   "conversations/getConversations",
   async function () {
     const response = await converationsApi.getConversations();
@@ -24,7 +31,7 @@ export const getConversations = createAsyncThunk(
   }
 );
 
-export const getConversationData = createAsyncThunk(
+export const getConversationData = createAsyncThunk<ConversationData, string>(
   "conversations/getConversationData",
   async function (id: string) {
     const response = await converationsApi.getConversationData(id);

@@ -1,15 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { usersApi } from "../../api/api";
-import { initialUserData } from "../../types";
+import { UserData, initialUserData } from "../../types";
 
 const initialState: initialUserData = {
   data: [],
 };
 
-export const getUsers = createAsyncThunk("users/getUsers", async function () {
-  const response = await usersApi.getUsers();
-  return response.data;
-});
+export const getUsers = createAsyncThunk<UserData[]>(
+  "users/getUsers",
+  async function () {
+    const response = await usersApi.getUsers();
+    return response.data;
+  }
+);
 
 const usersSlice = createSlice({
   name: "users",

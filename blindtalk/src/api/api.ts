@@ -1,12 +1,12 @@
 import axios from "axios";
 import {
   AuthData,
+  ConversationData,
   EditMessageData,
   NewConversationData,
   RegisterData,
   SendMessageData,
   UserData,
-  UserProfile,
   UserProfileInfoForUpdate,
 } from "../types";
 
