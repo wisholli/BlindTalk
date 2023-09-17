@@ -1,15 +1,15 @@
-import Login from "./components/login/Login";
+import Login from "./pages/login/Login";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "./components/header/Header";
-import Conversation from "./components/conversations/Conversation";
-import { Users } from "./components/users/Users";
+import Conversation from "./pages/conversationspage/Conversation";
+import { Users } from "./pages/homepage/Users";
 import { useEffect } from "react";
-import { getAuthStatus } from "./features/login/authSlice";
-import { useAppDispatch } from "./app/hooks";
-import { getConversations } from "./features/conversations/conversationsSlice";
-import Register from "./components/register/Register";
+import { getAuthStatus } from "./store/slices/login/authSlice";
+import { getConversations } from "./store/slices/conversations/conversationsSlice";
+import Register from "./pages/registerpage/Register";
 import { ProtectedRoutes } from "./utils/ProtectedRoutes/ProtectedRoutes";
-import { ProfilePage } from "./components/currentUserProfile/profilePage";
+import { ProfilePage } from "./pages/profilepage/profilePage";
+import { useAppDispatch } from "./store/store";
 
 function App() {
   const dispatch = useAppDispatch();

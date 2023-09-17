@@ -5,7 +5,7 @@ interface Props extends UserProfile {
   createConversation: (recipientId: number) => void;
 }
 
-export const UserInfo = ({
+export const UserCard = ({
   id,
   avatarUrl,
   birthDay,

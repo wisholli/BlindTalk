@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { Sex, UserProfileInfoForUpdate } from "../../types";
-import { useAppSelector } from "../../app/hooks";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import { useAppSelector } from "../../store/store";
 
 type Props = {
   setIsEditMode: () => void;

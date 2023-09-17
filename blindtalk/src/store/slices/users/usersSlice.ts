@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { usersApi } from "../../api/api";
-import { UserData, initialUserData } from "../../types";
+import { usersApi } from "../../../api/api";
+import { UserData, initialUserData } from "../../../types";
 
 const initialState: initialUserData = {
   data: [],

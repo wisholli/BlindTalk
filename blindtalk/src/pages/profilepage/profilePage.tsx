@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { EditUserProfileForm } from "./editUserProfileForm";
-import { CurrentUserProfile } from "./currentUserProfile";
+import { EditUserProfileForm } from "../../components/userProfile/editUserProfileForm";
+import { UserProfile } from "../../components/userProfile/currentUserProfile";
 import { UserProfileInfoForUpdate } from "../../types";
 import {
   getUserProfile,
   getUsersProfiles,
   updateUserLastNameFirstName,
   updateUserProfile,
-} from "../../features/users/profilesSlice";
-import { getUsers } from "../../features/users/usersSlice";
+} from "../../store/slices/users/profilesSlice";
+import { getUsers } from "../../store/slices/users/usersSlice";
 import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
 export const ProfilePage = () => {
   const allUsers = useAppSelector((state) => state.profiles.data);
@@ -101,9 +101,7 @@ export const ProfilePage = () => {
               onEditMode={onEditMode}
             />
           ) : (
-            <CurrentUserProfile
-              setIsEditMode={() => setIsEditMode(!isEditMode)}
-            />
+            <UserProfile setIsEditMode={() => setIsEditMode(!isEditMode)} />
           )}
         </div>
       </div>

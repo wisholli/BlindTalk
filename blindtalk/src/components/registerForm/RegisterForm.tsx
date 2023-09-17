@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { NavLink } from "react-router-dom";
 import { ActiveCheckBox, RegisterData, Sex } from "../../types";
-import { CheckBox } from "../../utils/CheckBox/CheckBox";
+import { CheckBox } from "../checkBox/CheckBox";
 import eyeIcon from "../../assets/images/eye-icon.svg";
 import eyeOffIcon from "../../assets/images/eye-off-icon.svg";
 

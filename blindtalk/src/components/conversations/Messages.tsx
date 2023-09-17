@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setNewEditMessageId } from "../../features/messages/messagesSlice";
+import { setNewEditMessageId } from "../../store/slices/messages/messagesSlice";
 import { MessagesProps } from "../../types";
 import moment from "moment";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
-export const ConversationMessages = ({
+export const Messages = ({
   author,
   content,
   createdAt,

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import logo from "./../../assets/images/logo.svg";
 import menuIcon from "./../../assets/images/menu-icon.svg";
 import closeIcon from "../../assets/images/close-icon.svg";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/store";
 
 export const Header = () => {
   const [isToggled, setToggle] = useState<boolean>(false);

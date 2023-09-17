@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { EditMessageData } from "../../types";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/store";
 
 type Props = {
   sendNewMessage: (content: string) => void;

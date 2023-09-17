@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/store";
 
 type Props = {
   setIsEditMode: () => void;
 };
 
-export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
+export const UserProfile = ({ setIsEditMode }: Props) => {
   let { id } = useParams();
 
   const allUsers = useAppSelector((state) => state.profiles.data);

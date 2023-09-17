@@ -1,7 +1,7 @@
-import { UserData, UserProfile } from "./../../types";
+import { UserData, UserProfile } from "../../../types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { UserProfileInfoForUpdate, initialProfilesData } from "../../types";
-import { profilesApi, usersApi } from "../../api/api";
+import { UserProfileInfoForUpdate, initialProfilesData } from "../../../types";
+import { profilesApi, usersApi } from "../../../api/api";
 
 const initialState: initialProfilesData = {
   data: [],

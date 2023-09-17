@@ -1,6 +1,6 @@
 import { NavLink, useParams } from "react-router-dom";
 import { UserData } from "../../types";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../store/store";
 
 interface Props {
   conversationId: number;
@@ -9,7 +9,12 @@ interface Props {
   setToggle?: () => void;
 }
 
-const SideBar = ({ conversationId, recipient, creator, setToggle }: Props) => {
+export const ConversationsSideBar = ({
+  conversationId,
+  recipient,
+  creator,
+  setToggle,
+}: Props) => {
   const authData = useAppSelector((state) => state.auth);
 
   const { id } = useParams();
@@ -57,5 +62,3 @@ const SideBar = ({ conversationId, recipient, creator, setToggle }: Props) => {
 
   return <div>{userList}</div>;
 };
-
-export default SideBar;

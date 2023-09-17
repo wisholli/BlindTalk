@@ -3,8 +3,8 @@ import {
   ConversationData,
   NewConversationData,
   initialConversationsData,
-} from "../../types";
-import { converationsApi } from "../../api/api";
+} from "../../../types";
+import { converationsApi } from "../../../api/api";
 
 const initialState: initialConversationsData = {
   data: [],

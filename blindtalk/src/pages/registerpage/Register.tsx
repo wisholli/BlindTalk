@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RegisterData } from "../../types";
-import { register } from "../../features/login/authSlice";
-import RegisterForm from "./RegisterForm";
+import { register } from "../../store/slices/login/authSlice";
+import RegisterForm from "../../components/registerForm/RegisterForm";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
 const Register = () => {
   const dispatch = useAppDispatch();

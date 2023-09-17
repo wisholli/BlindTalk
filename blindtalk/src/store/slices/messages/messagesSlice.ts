@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { messagesApi } from "../../api/api";
+import { messagesApi } from "../../../api/api";
 import {
   EditMessageData,
   initialMessagesData,
   SendMessageData,
-} from "../../types";
+} from "../../../types";
 
 const initialState: initialMessagesData = {
   id: 0,

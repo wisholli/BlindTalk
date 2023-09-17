@@ -1,8 +1,8 @@
 import { AuthData } from "../../types";
-import LoginForm from "./LoginForm";
-import { login } from "../../features/login/authSlice";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import LoginForm from "../../components/loginForm/LoginForm";
+import { login } from "../../store/slices/login/authSlice";
 import { Navigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
 const Login = () => {
   const dispatch = useAppDispatch();

@@ -12,7 +12,7 @@ import {
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: "http://localhost:3001/api/",
+  baseURL: "https://blind-talk-release-bf030d3b1b76.herokuapp.com/api/",
 });
 
 export const authApi = {

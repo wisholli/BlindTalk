@@ -1,23 +1,23 @@
 import { useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   editMessage,
   getConversationMessages,
   receiveMessage,
   sendMessage,
   setNewEditMessageId,
-} from "../../features/messages/messagesSlice";
+} from "../../store/slices/messages/messagesSlice";
 import {
   getConversationData,
   setIsChatSelected,
-} from "../../features/conversations/conversationsSlice";
+} from "../../store/slices/conversations/conversationsSlice";
 import moment from "moment";
-import { ConversationMessages } from "./ConversationMessages";
-import SideBar from "./SideBar";
-import SendMessageForm from "./SendMessageForm";
+import { Messages } from "../../components/conversations/Messages";
+import { ConversationsSideBar } from "../../components/conversations/ConversationsSideBar";
+import SendMessageForm from "../../components/conversations/SendMessageForm";
 import { EditMessageData } from "../../types";
 import { SocketContext } from "../../utils/SocketContext/SocketContext";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
 const Conversation = () => {
   const dispatch = useAppDispatch();
@@ -83,7 +83,7 @@ const Conversation = () => {
   //Messages
   const messages = messagesData.messages
     .map((message) => (
-      <ConversationMessages
+      <Messages
         key={message.id}
         {...message}
         lastMessageRef={lastMessageRef}
@@ -98,7 +98,7 @@ const Conversation = () => {
         <div className=" w-1/4 pr-2 overflow-y-scroll h-[calc(100vh-124px)] scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
           <div className="border-t-2 border-gray-400">
             {conversationData.data.map((dialog) => (
-              <SideBar
+              <ConversationsSideBar
                 key={dialog.id}
                 conversationId={dialog.id}
                 recipient={dialog.recipient}
@@ -143,7 +143,7 @@ const Conversation = () => {
           } overflow-y-scroll h-[calc(100vh-58px)]`}
         >
           {conversationData.data.map((dialog) => (
-            <SideBar
+            <ConversationsSideBar
               key={dialog.id}
               conversationId={dialog.id}
               recipient={dialog.recipient}
