@@ -10,8 +10,6 @@ const Register = () => {
   const authData = useAppSelector((state) => state.auth);
 
   const onRegister = (data: RegisterData) => {
-    console.log(data);
-
     dispatch(register(data));
   };
 

@@ -17,7 +17,6 @@ interface MyFormValues {
 export const LoginForm = ({ onLogin }: Props) => {
   //show and hide password
   let [isPassword, setIsPassword] = useState<boolean>(false);
-  console.log(isPassword);
 
   const initialValues: MyFormValues = { email: "", password: "" };
   return (
