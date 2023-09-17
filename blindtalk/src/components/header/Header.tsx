@@ -23,7 +23,9 @@ export const Header = () => {
       }`}
     >
       <div className="flex justify-between items-center">
-        <img src={logo} alt="logo" className="w-1/3 md:w-auto" />
+        <NavLink to="/">
+          <img src={logo} alt="logo" className="w-1/3 md:w-52" />
+        </NavLink>
         <div>
           <button
             className="md:hidden cursor-pointer"
