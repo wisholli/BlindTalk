@@ -11,6 +11,7 @@ import {
 import { getUsers } from "../../store/slices/users/usersSlice";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/store";
+import { Headline } from "../../utils/Headline/Headline";
 
 export const ProfilePage = () => {
   const allUsers = useAppSelector((state) => state.profiles.data);
@@ -64,64 +65,44 @@ export const ProfilePage = () => {
       dispatch(updateUserLastNameFirstName({ firstName, lastName, id }));
   };
 
-  //headline component
-  interface Props {
-    text: string;
-  }
-
-  let headlineForSelectedUser = [
-    selectedUser[0]?.user.firstName,
-    selectedUser[0]?.user.lastName,
-    "profile",
-  ];
-
-  const Headline = ({ text }: Props) => (
-    <h1 className="font-pacifico font-normal text-6xl text-black-100 text-center mb-10">
-      {text}
-    </h1>
-  );
+  //headline
+  let headlineForSelectedUser = `${selectedUser[0]?.user.firstName} 
+    ${selectedUser[0]?.user.lastName}
+    profile`;
 
   return (
-    <div className="xl:mx-60">
+    <div className="w-11/12 mx-auto xl:w-3/4">
       <div className="flex justify-center">
         {Number(id) === athorizedUserId ? (
-          <Headline text={"My profile"} />
+          <Headline text="My profile" />
         ) : (
-          <div className="flex gap-2">
-            {headlineForSelectedUser.map((text) => (
-              <Headline text={text} />
-            ))}
-          </div>
+          <Headline text={headlineForSelectedUser} />
         )}
       </div>
 
-      <div className="flex w-full items-center">
+      <div className="flex justify-center gap-10 flex-col lg:flex-row w-full items-center">
         {selectedUser[0]?.id && (
-          <div className="flex justify-start w-1/2">
-            <div className="flex flex-col gap-9 items-center ">
-              {selectedUser[0]?.avatarUrl != null && (
-                <img
-                  src={selectedUser[0]?.avatarUrl}
-                  alt="user-photo"
-                  className="rounded-full h-96 w-96"
-                />
-              )}
-            </div>
+          <div>
+            {selectedUser[0]?.avatarUrl != null && (
+              <img
+                src={selectedUser[0]?.avatarUrl}
+                alt="user-photo"
+                className="rounded-full h-52 w-52 md:h-72 md:w-72 lg:h-96 lg:w-96"
+              />
+            )}
           </div>
         )}
 
-        <div className="w-1/2">
-          {isEditMode ? (
-            <EditUserProfileForm
-              setIsEditMode={() => setIsEditMode(!isEditMode)}
-              onEditMode={onEditMode}
-            />
-          ) : (
-            <CurrentUserProfile
-              setIsEditMode={() => setIsEditMode(!isEditMode)}
-            />
-          )}
-        </div>
+        {isEditMode ? (
+          <EditUserProfileForm
+            setIsEditMode={() => setIsEditMode(!isEditMode)}
+            onEditMode={onEditMode}
+          />
+        ) : (
+          <CurrentUserProfile
+            setIsEditMode={() => setIsEditMode(!isEditMode)}
+          />
+        )}
       </div>
     </div>
   );

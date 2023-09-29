@@ -34,7 +34,10 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="w-[600px]">
+    <form
+      onSubmit={formik.handleSubmit}
+      className="w-11/12 mx-auto lg:w-[600px]"
+    >
       <div className="flex flex-col gap-9">
         <div className="flex justify-center gap-5 items-center ">
           <div className="w-1/2">
@@ -44,7 +47,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               type="text"
               value={formik.values.firstName}
               onChange={formik.handleChange}
-              className="w-full border-b-2 border-black-100 bg-white outline-none font-maven font-normal text-6xl text-gray-100"
+              className="w-full border-b-2 border-black-100 bg-white outline-none font-maven font-normal text-4xl md:text-6xl text-gray-100"
             />
           </div>
           <div className="w-1/2">
@@ -54,7 +57,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               type="text"
               value={formik.values.lastName}
               onChange={formik.handleChange}
-              className="w-full border-b-2 border-black-100 bg-white outline-none text-6xl font-maven font-normal text-gray-100"
+              className="w-full border-b-2 border-black-100 bg-white outline-none text-4xl md:text-6xl font-maven font-normal text-gray-100"
             />
           </div>
         </div>
@@ -67,7 +70,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               value={formik.values.birthDay!}
               placeholder="Birthday"
               onChange={formik.handleChange}
-              className="w-full bg-white outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
+              className="w-full bg-white outline-none border-b-2 border-black-100 font-maven font-normal text-2xl md:text-4xl text-gray-100"
             />
           </div>
 
@@ -129,7 +132,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               value={formik.values.country || ""}
               onChange={(val: string) => formik.setFieldValue("country", val)}
               priorityOptions={["CA", "US", "GB"]}
-              classes="w-full outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
+              classes="w-full outline-none border-b-2 border-black-100 font-maven font-normal text-2xl md:text-4xl text-gray-100"
             />
           </div>
 
@@ -140,7 +143,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
               onChange={(val: string) => {
                 formik.setFieldValue("city", val);
               }}
-              classes="w-full outline-none border-b-2 border-black-100 font-maven font-normal text-4xl text-gray-100"
+              classes="w-full outline-none border-b-2 border-black-100 font-maven font-normal text-2xl md:text-4xl text-gray-100"
             />
           </div>
         </div>
@@ -152,13 +155,13 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
             value={formik.values.status!}
             placeholder="Please enter your status"
             onChange={formik.handleChange}
-            className="w-full resize-none bg-white outline-none font-maven font-normal text-3xl text-center text-gray-100"
+            className="w-full resize-none bg-white outline-none font-maven font-normal text-xl md:text-3xl text-center text-gray-100"
           />
         </div>
         <div className="flex justify-center">
           <button
             type="submit"
-            className=" bg-green-100 rounded-3xl font-maven font-medium text-3xl text-white py-2 px-24"
+            className=" bg-green-100 rounded-3xl font-maven mb-10 lg:mb-0 font-medium text-3xl text-white py-2 px-24"
           >
             Done
           </button>

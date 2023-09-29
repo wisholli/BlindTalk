@@ -17,13 +17,13 @@ export const getUsersProfiles = createAsyncThunk(
   }
 );
 
-export const getUserProfile = createAsyncThunk(
-  "usersProfiles/getUserProfile",
-  async function (id: number) {
-    const response = await profilesApi.getUserProfile(id);
-    return response.data;
-  }
-);
+export const getUserProfile = createAsyncThunk<
+  UserProfileInfoForUpdate,
+  number
+>("usersProfiles/getUserProfile", async function (id: number) {
+  const response = await profilesApi.getUserProfile(id);
+  return response.data;
+});
 
 export const updateUserProfile = createAsyncThunk<UserProfile, UserProfile>(
   "usersProfiles/updateUserProfile",
@@ -51,7 +51,22 @@ const usersProfilesSlice = createSlice({
       state.data = payload;
     });
     builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
-      state.currentUserProfile = payload;
+      let currentUserIndex = state.data.findIndex((u) => u.id === payload.id);
+      let userProfile: UserProfile = {
+        id: payload.id!,
+        avatarUrl: payload.avatarUrl!,
+        birthDay: payload.birthDay!,
+        city: payload.city!,
+        country: payload.country!,
+        sex: payload.sex!,
+        status: payload.status!,
+        user: {
+          firstName: state.data[currentUserIndex].user.firstName,
+          lastName: state.data[currentUserIndex].user.lastName,
+          profileId: state.data[currentUserIndex].user.profileId,
+        },
+      };
+      state.currentUserProfile = userProfile;
     });
     builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
       let currentUserIndex = state.data.findIndex((u) => u.id === payload.id);
