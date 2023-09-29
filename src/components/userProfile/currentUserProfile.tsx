@@ -5,7 +5,7 @@ type Props = {
   setIsEditMode: () => void;
 };
 
-export const UserProfile = ({ setIsEditMode }: Props) => {
+export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
   let { id } = useParams();
 
   const allUsers = useAppSelector((state) => state.profiles.data);

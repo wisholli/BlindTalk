@@ -25,12 +25,9 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
-export const updateUserProfile = createAsyncThunk<
-  UserProfileInfoForUpdate,
-  UserProfileInfoForUpdate
->(
+export const updateUserProfile = createAsyncThunk<UserProfile, UserProfile>(
   "usersProfiles/updateUserProfile",
-  async function (data: UserProfileInfoForUpdate) {
+  async function (data: UserProfile) {
     const response = await profilesApi.editUserProfile(data);
     return response.data;
   }
@@ -57,18 +54,19 @@ const usersProfilesSlice = createSlice({
       state.currentUserProfile = payload;
     });
     builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
-      let { id } = payload;
-      let userForUpdate = state.data.filter((u) => u.id === id);
-      userForUpdate[0] = payload as UserProfile;
-      state.currentUserProfile = payload as UserProfile;
+      let currentUserIndex = state.data.findIndex((u) => u.id === payload.id);
+      if (currentUserIndex >= 0) state.data[currentUserIndex] = payload;
+      state.currentUserProfile = payload;
     });
     builder.addCase(
       updateUserLastNameFirstName.fulfilled,
       (state, { payload }) => {
         let { id, firstName, lastName } = payload;
-        let userForUpdate = state.data.filter((u) => u.id === id);
-        userForUpdate[0].user.firstName = firstName;
-        userForUpdate[0].user.lastName = lastName;
+        let currentUserIndex = state.data.findIndex((u) => u.id === id);
+        if (currentUserIndex >= 0) {
+          state.data[currentUserIndex].user.firstName = firstName;
+          state.data[currentUserIndex].user.lastName = lastName;
+        }
       }
     );
   },

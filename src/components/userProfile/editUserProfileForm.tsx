@@ -14,24 +14,18 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
     (state) => state.profiles.currentUserProfile
   );
 
-  const allUsers = useAppSelector((state) => state.profiles.data);
-
-  let currentUser = allUsers.filter(
-    (u) => u.user?.profileId === currentUserProfile?.id
-  );
-
   //formik
   const formik = useFormik<UserProfileInfoForUpdate>({
     initialValues: {
-      id: currentUser[0].user!.profileId,
+      id: currentUserProfile!.user.profileId,
       birthDay: currentUserProfile!.birthDay,
       city: currentUserProfile!.city,
       country: currentUserProfile!.country,
       sex: currentUserProfile!.sex,
       status: currentUserProfile!.status,
-      firstName: currentUser[0].user!.firstName,
-      lastName: currentUser[0].user!.lastName,
-      avatarUrl: currentUser[0].avatarUrl,
+      firstName: currentUserProfile!.user!.firstName,
+      lastName: currentUserProfile!.user!.lastName,
+      avatarUrl: currentUserProfile!.avatarUrl,
     },
     onSubmit: (values) => {
       setIsEditMode();
@@ -69,7 +63,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
             <input
               id="birthDay"
               name="birthDay"
-              type="text"
+              type="date"
               value={formik.values.birthDay!}
               placeholder="Birthday"
               onChange={formik.handleChange}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { EditUserProfileForm } from "../../components/userProfile/editUserProfileForm";
-import { UserProfile } from "../../components/userProfile/currentUserProfile";
-import { UserProfileInfoForUpdate } from "../../types";
+import { CurrentUserProfile } from "../../components/userProfile/currentUserProfile";
+import { UserProfile, UserProfileInfoForUpdate } from "../../types";
 import {
   getUserProfile,
   getUsersProfiles,
@@ -42,8 +42,24 @@ export const ProfilePage = () => {
   const dispatch = useAppDispatch();
 
   const onEditMode = (data: UserProfileInfoForUpdate) => {
+    let updatedUserData: UserProfile = {
+      id: data.id ? data.id : selectedUser[0].id,
+      avatarUrl: data.avatarUrl ? data.avatarUrl : selectedUser[0].avatarUrl,
+      birthDay: data.birthDay ? data.birthDay : selectedUser[0].birthDay,
+      city: data.city ? data.city : selectedUser[0].city,
+      country: data.country ? data.country : selectedUser[0].country,
+      sex: data.sex ? data.sex : selectedUser[0].sex,
+      status: data.status ? data.status : selectedUser[0].status,
+      user: {
+        firstName: data.firstName
+          ? data.firstName
+          : currentUserData[0].firstName,
+        lastName: data.lastName ? data.lastName : currentUserData[0].lastName,
+        profileId: currentUserData[0].profileId,
+      },
+    };
+    dispatch(updateUserProfile(updatedUserData));
     let { firstName, lastName, id } = data;
-    dispatch(updateUserProfile(data));
     if (firstName && lastName && id)
       dispatch(updateUserLastNameFirstName({ firstName, lastName, id }));
   };
@@ -101,7 +117,9 @@ export const ProfilePage = () => {
               onEditMode={onEditMode}
             />
           ) : (
-            <UserProfile setIsEditMode={() => setIsEditMode(!isEditMode)} />
+            <CurrentUserProfile
+              setIsEditMode={() => setIsEditMode(!isEditMode)}
+            />
           )}
         </div>
       </div>
