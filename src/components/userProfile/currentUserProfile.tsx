@@ -7,45 +7,51 @@ type Props = {
 
 export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
   let { id } = useParams();
-
-  const allUsers = useAppSelector((state) => state.profiles.data);
   const authData = useAppSelector((state) => state.auth);
 
-  let selectedUser = allUsers.filter((u) => u.id === Number(id));
+  //user profile data
+  const currentUserProfile = useAppSelector(
+    (state) => state.profiles.currentUserProfile
+  );
 
-  if (selectedUser[0]) {
+  let birthdayDate = currentUserProfile?.birthDay
+    ?.split("-")
+    .reverse()
+    .join(".");
+
+  if (currentUserProfile) {
     return (
       <div className="flex flex-col gap-8">
         <div className="flex gap-2 justify-center items-center mt-7 ">
           <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-6xl">
-            {selectedUser[0].user?.firstName}
+            {currentUserProfile.user?.firstName}
           </p>
           <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-6xl">
-            {selectedUser[0].user?.lastName}
+            {currentUserProfile.user?.lastName}
           </p>
         </div>
         <div className="flex justify-center items-center gap-6">
-          {selectedUser[0].sex ? (
+          {currentUserProfile.sex ? (
             <p className="m-0 font-maven font-normal text-3xl text-black-100 text-center">
-              {selectedUser[0].sex}
+              {currentUserProfile.sex}
             </p>
           ) : (
             <p className="m-0 font-maven font-normal text-sm text-black-100 text-center ">
               Gender not specified
             </p>
           )}
-          {selectedUser[0].birthDay ? (
+          {currentUserProfile.birthDay ? (
             <p className="m-0 font-maven font-normal text-3xl text-black-100 text-center">
-              {selectedUser[0].birthDay}
+              {birthdayDate}
             </p>
           ) : (
             <p className="m-0 font-maven font-normal text-sm text-black-100 text-center ">
               Birthday not specified
             </p>
           )}
-          {selectedUser[0].country && selectedUser[0].city ? (
+          {currentUserProfile.country && currentUserProfile.city ? (
             <p className="m-0 font-maven font-normal text-2xl text-black-100 text-center">
-              {selectedUser[0].country}, {selectedUser[0].city}
+              {currentUserProfile.country}, {currentUserProfile.city}
             </p>
           ) : (
             <p className="m-0 font-maven font-normal text-sm text-black-100 text-center lg:text-base">
@@ -54,9 +60,9 @@ export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
           )}
         </div>
         <div className="flex justify-center border-2 border-green-100 rounded-3xl py-16">
-          {selectedUser[0].status ? (
+          {currentUserProfile.status ? (
             <p className="m-0 font-maven font-normal text-4xl text-black-100 ">
-              {selectedUser[0].status}
+              {currentUserProfile.status}
             </p>
           ) : (
             <p className="m-0 font-maven font-normal text-xl text-black-100  lg:text-2xl">
