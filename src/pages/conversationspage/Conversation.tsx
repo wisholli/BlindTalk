@@ -24,6 +24,7 @@ const Conversation = () => {
   const conversationData = useAppSelector((state) => state.conversations);
   const messagesData = useAppSelector((state) => state.messages);
   const authData = useAppSelector((state) => state.auth);
+
   const setSelectedStatus = () => dispatch(setIsChatSelected());
 
   //WebSocket
@@ -108,27 +109,24 @@ const Conversation = () => {
           </div>
         </div>
         <div className="w-5/6 flex flex-col justify-between gap-5">
-          {messages[0] && (
-            <div className="flex items-center justify-center">
-              <div className="font-maven font-normal text-xl text-black-100 border-b-2 border-black-200 border-opacity-60">
-                {moment(conversationData.currentDialog?.createdAt)
-                  .utc()
-                  .format("DD MMM YYYY")}
+          {messages[0] ? (
+            <div className="mx-16 pr-5 h-[calc(100vh-308px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
+              <div className="flex items-center justify-center">
+                <div className="font-maven font-normal text-xl text-black-100 border-b-2 border-black-200 border-opacity-60">
+                  {moment(conversationData.currentDialog?.createdAt)
+                    .utc()
+                    .format("DD MMM YYYY")}
+                </div>
               </div>
+              {messages}
+            </div>
+          ) : (
+            <div className="flex justify-center mt-56">
+              <p className="font-pacifico text-black-100 text-4xl">
+                Send your first message
+              </p>
             </div>
           )}
-
-          <div className="mx-16 pr-5 h-[calc(100vh-308px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
-            {messages[0] ? (
-              messages
-            ) : (
-              <div className="flex justify-center mt-56">
-                <p className="font-pacifico text-black-100 text-4xl">
-                  Send your first message
-                </p>
-              </div>
-            )}
-          </div>
           <SendMessageForm
             sendNewMessage={sendNewMessage}
             handleEditMessage={handleEditMessage}
@@ -140,7 +138,7 @@ const Conversation = () => {
         <div
           className={` ${
             conversationData.isChatSelected && "hidden"
-          } overflow-y-scroll h-[calc(100vh-58px)]`}
+          } overflow-y-scroll h-[calc(100vh-130px)]`}
         >
           {conversationData.data.map((dialog) => (
             <ConversationsSideBar
@@ -178,17 +176,26 @@ const Conversation = () => {
                 )}
               </div>
             </div>
-            <div className="flex flex-col gap-3 mt-2">
-              <div className="flex items-center justify-center">
-                <div className="font-maven font-normal text-sm text-black-100 border-b-2 border-black-200 border-opacity-60">
-                  {moment(conversationData.currentDialog?.createdAt)
-                    .utc()
-                    .format("DD MMM YYYY")}
+            <div className="flex flex-col justify-between items-center h-[calc(100vh-160px)] mt-3">
+              {messages[0] ? (
+                <div className="mx-2 px-2 h-[calc(100vh-260px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg w-full">
+                  <div className="flex items-center justify-center mb-3">
+                    <div className="font-maven font-normal text-sm text-black-100 border-b-2 border-black-200 border-opacity-60">
+                      {moment(conversationData.currentDialog?.createdAt)
+                        .utc()
+                        .format("DD MMM YYYY")}
+                    </div>
+                  </div>
+                  {messages}
                 </div>
-              </div>
-              <div className="mx-2 px-2 h-[calc(100vh-170px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
-                {messages}
-              </div>
+              ) : (
+                <div className="flex justify-center mt-56">
+                  <p className="font-pacifico text-black-100 text-2xl">
+                    Send your first message
+                  </p>
+                </div>
+              )}
+
               <SendMessageForm
                 sendNewMessage={sendNewMessage}
                 handleEditMessage={handleEditMessage}

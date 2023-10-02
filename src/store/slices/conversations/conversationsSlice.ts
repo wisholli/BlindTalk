@@ -49,13 +49,20 @@ const conversationsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(createANewConversation.fulfilled, (state, { payload }) => {
-      state.data.push(payload);
+      state.data = [...state.data, payload];
     });
     builder.addCase(getConversations.fulfilled, (state, { payload }) => {
       state.data = payload;
     });
     builder.addCase(getConversationData.fulfilled, (state, { payload }) => {
-      state.currentDialog = payload;
+      let data = state.data.filter((d) => d.id === payload.id);
+      let dataForCurrentDialog: ConversationData = {
+        id: payload.id,
+        createdAt: payload.createdAt,
+        creator: data[0].creator,
+        recipient: data[0].recipient,
+      };
+      state.currentDialog = dataForCurrentDialog;
     });
   },
 });

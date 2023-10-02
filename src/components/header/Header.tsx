@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import logo from "./../../assets/images/logo.svg";
 import menuIcon from "./../../assets/images/menu-icon.svg";
 import { useAppSelector } from "../../store/store";
@@ -24,9 +24,15 @@ export const Header = () => {
 
   let isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
 
+  const { path } = useParams();
+
   return (
     <div className="sticky top-0 z-10 bg-white shadow-md w-full">
-      <div className="w-11/12 mx-auto py-3 mb-10">
+      <div
+        className={`w-11/12 mx-auto py-3 ${
+          path !== "/conversation/" && isAboveMediumScreens ? "mb-10" : "mb-0"
+        }`}
+      >
         <div className="flex justify-between items-center">
           <NavLink to="/">
             <img src={logo} alt="logo" className="w-52" />
