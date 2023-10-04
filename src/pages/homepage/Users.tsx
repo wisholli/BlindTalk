@@ -10,17 +10,17 @@ import {
   getUsersProfiles,
 } from "../../store/slices/users/profilesSlice";
 import { useNavigate } from "react-router-dom";
-import { ConversationData } from "../../types";
+import { ConversationData, UserProfile } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 
 export const Users = () => {
   const dispatch = useAppDispatch();
   const usersProfiles = useAppSelector((state) => state.profiles.data);
   const authData = useAppSelector((state) => state.auth);
-  const userData = useAppSelector((state) => state.users.data);
+  const userData = useAppSelector((state) => state.users);
   const conversations = useAppSelector((state) => state.conversations.data);
 
-  let currentUser = userData.filter((u) => u.id === authData.id);
+  let currentUser = userData.data.filter((u) => u.id === authData.id);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -48,9 +48,12 @@ export const Users = () => {
   };
 
   //users without current user
-  let usersWithoutCurrentUser = usersProfiles.filter(
-    (p) => p.id !== currentUser[0].profileId
-  );
+  let usersWithoutCurrentUser: UserProfile[] = [];
+  if (currentUser[0]) {
+    usersWithoutCurrentUser = usersProfiles.filter(
+      (p) => p.id !== currentUser[0].profileId
+    );
+  }
 
   //users without conversation with current user
   let creatorsAndRecipients = conversations.map(
@@ -67,7 +70,7 @@ export const Users = () => {
         <h1 className="font-pacifico font-normal text-center text-4xl text-black-100  mt-5 md:text-6xl md:mb-5 lg:mb-14 lg:mt-0">
           Find your new friend!
         </h1>
-        <div className="mt-10 h-[calc(100vh-180px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg px-2 md:h-[calc(100vh-204px)] md:mt-5 lg:h-[calc(100vh-240px)] lg:mt-0">
+        <div className="mt-10 h-[calc(100vh-180px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg px-2 md:h-[calc(100vh-210px)] md:mt-5 lg:h-[calc(100vh-250px)] lg:mt-0">
           {usersWithoutConversationWithCurrentUser.map((u) => {
             return (
               <UserCard

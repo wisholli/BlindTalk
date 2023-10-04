@@ -21,7 +21,7 @@ export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
 
   if (currentUserProfile) {
     return (
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4 lg:gap-8">
         <div className="flex gap-2 justify-center items-center mt-7 ">
           <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-6xl">
             {currentUserProfile.user?.firstName}
@@ -30,9 +30,9 @@ export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
             {currentUserProfile.user?.lastName}
           </p>
         </div>
-        <div className="flex justify-center items-center gap-6">
+        <div className="flex justify-center items-center gap-3 lg:gap-6">
           {currentUserProfile.sex ? (
-            <p className="m-0 font-maven font-normal text-3xl text-black-100 text-center">
+            <p className="m-0 font-maven font-normal text-xl lg:text-3xl text-black-100 text-center">
               {currentUserProfile.sex}
             </p>
           ) : (
@@ -41,7 +41,7 @@ export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
             </p>
           )}
           {currentUserProfile.birthDay ? (
-            <p className="m-0 font-maven font-normal text-3xl text-black-100 text-center">
+            <p className="m-0 font-maven font-normal text-xl lg:text-3xl text-black-100 text-center">
               {birthdayDate}
             </p>
           ) : (
@@ -50,7 +50,7 @@ export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
             </p>
           )}
           {currentUserProfile.country && currentUserProfile.city ? (
-            <p className="m-0 font-maven font-normal text-2xl text-black-100 text-center">
+            <p className="m-0 font-maven font-normal text-lg lg:text-2xl text-black-100 text-center">
               {currentUserProfile.country}, {currentUserProfile.city}
             </p>
           ) : (
@@ -59,9 +59,9 @@ export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
             </p>
           )}
         </div>
-        <div className="flex justify-center border-2 border-green-100 rounded-3xl py-16">
+        <div className="flex justify-center border-2 border-green-100 rounded-3xl py-10 lg:py-16">
           {currentUserProfile.status ? (
-            <p className="m-0 font-maven font-normal text-4xl text-black-100 ">
+            <p className="m-0 font-maven font-normal text-2xl lg:text-4xl text-black-100 ">
               {currentUserProfile.status}
             </p>
           ) : (
@@ -71,17 +71,17 @@ export const CurrentUserProfile = ({ setIsEditMode }: Props) => {
           )}
         </div>
         {authData.id === Number(id) && (
-          <div className="flex justify-center gap-5">
+          <div className="flex justify-center gap-5 mb-10 lg:mb-0">
             <button
               onClick={setIsEditMode}
               className="bg-green-100 py-2 px-11 rounded-3xl w-1/2"
             >
-              <p className="m-0 font-maven font-medium text-xl text-white">
+              <p className="m-0 font-maven font-medium text-base lg:text-xl text-white">
                 Edit information
               </p>
             </button>
             <button className="bg-gray-400 py-2 px-11 rounded-3xl w-1/2">
-              <p className="m-0 font-maven font-medium text-xl text-white">
+              <p className="m-0 font-maven font-medium text-base lg:text-xl text-white">
                 Delete profile
               </p>
             </button>

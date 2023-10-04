@@ -96,7 +96,7 @@ const Conversation = () => {
   return (
     <div>
       <div className="hidden w-full lg:flex">
-        <div className=" w-1/4 pr-2 overflow-y-scroll h-[calc(100vh-124px)] scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
+        <div className=" w-1/4 pr-2 overflow-y-scroll h-[calc(100vh-130px)] scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
           <div className="border-t-2 border-gray-400">
             {conversationData.data.map((dialog) => (
               <ConversationsSideBar
@@ -176,9 +176,9 @@ const Conversation = () => {
                 )}
               </div>
             </div>
-            <div className="flex flex-col justify-between items-center h-[calc(100vh-160px)] mt-3">
+            <div className="flex flex-col justify-between items-center h-[calc(100vh-160px)] mt-3 mx-2">
               {messages[0] ? (
-                <div className="mx-2 px-2 h-[calc(100vh-260px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg w-full">
+                <div className="px-2 h-[calc(100vh-260px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg w-full">
                   <div className="flex items-center justify-center mb-3">
                     <div className="font-maven font-normal text-sm text-black-100 border-b-2 border-black-200 border-opacity-60">
                       {moment(conversationData.currentDialog?.createdAt)
@@ -195,12 +195,13 @@ const Conversation = () => {
                   </p>
                 </div>
               )}
-
-              <SendMessageForm
-                sendNewMessage={sendNewMessage}
-                handleEditMessage={handleEditMessage}
-                inputRef={inputRef}
-              />
+              <div className="w-full">
+                <SendMessageForm
+                  sendNewMessage={sendNewMessage}
+                  handleEditMessage={handleEditMessage}
+                  inputRef={inputRef}
+                />
+              </div>
             </div>
           </div>
         )}

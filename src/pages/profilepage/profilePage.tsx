@@ -72,7 +72,7 @@ export const ProfilePage = () => {
 
   return (
     <div className="w-11/12 mx-auto xl:w-3/4">
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-5 lg:mt-0">
         {Number(id) === athorizedUserId ? (
           <Headline text="My profile" />
         ) : (
@@ -80,7 +80,7 @@ export const ProfilePage = () => {
         )}
       </div>
 
-      <div className="flex justify-center gap-10 flex-col lg:flex-row w-full items-center">
+      <div className="flex justify-center lg:gap-10 flex-col lg:flex-row w-full items-center">
         {selectedUser[0]?.id && (
           <div>
             {selectedUser[0]?.avatarUrl != null && (

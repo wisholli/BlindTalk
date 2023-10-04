@@ -36,9 +36,9 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="w-11/12 mx-auto lg:w-[600px]"
+      className="w-11/12 mx-auto lg:w-[600px] mt-5 lg:mt-0"
     >
-      <div className="flex flex-col gap-9">
+      <div className="flex flex-col gap-9 ">
         <div className="flex justify-center gap-5 items-center ">
           <div className="w-1/2">
             <input
@@ -161,7 +161,7 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className=" bg-green-100 rounded-3xl font-maven mb-10 lg:mb-0 font-medium text-3xl text-white py-2 px-24"
+            className=" bg-green-100 rounded-3xl font-maven mb-10 lg:mb-0 font-medium text-xl lg:text-3xl text-white py-2 px-24"
           >
             Done
           </button>

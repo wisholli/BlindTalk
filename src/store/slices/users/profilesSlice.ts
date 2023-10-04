@@ -9,7 +9,7 @@ const initialState: initialProfilesData = {
   userForUpdate: null,
 };
 
-export const getUsersProfiles = createAsyncThunk(
+export const getUsersProfiles = createAsyncThunk<UserProfile[]>(
   "usersProfiles/getUsersProfiles",
   async function () {
     const response = await profilesApi.getProfiles();
@@ -33,7 +33,10 @@ export const updateUserProfile = createAsyncThunk<UserProfile, UserProfile>(
   }
 );
 
-export const updateUserLastNameFirstName = createAsyncThunk(
+export const updateUserLastNameFirstName = createAsyncThunk<
+  Omit<UserData, "email" | "profileId">,
+  Omit<UserData, "email" | "profileId">
+>(
   "usersProfiles/updateUserLastNameFirstName",
   async function (data: Omit<UserData, "email" | "profileId">) {
     let { id, firstName, lastName } = data;
