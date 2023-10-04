@@ -1,6 +1,5 @@
 import Login from "./pages/login/Login";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { Header } from "./components/header/Header";
 import Conversation from "./pages/conversationspage/Conversation";
 import { Users } from "./pages/homepage/Users";
 import { useEffect } from "react";

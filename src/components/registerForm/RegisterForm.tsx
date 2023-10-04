@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 import { NavLink } from "react-router-dom";
 import { ActiveCheckBox, RegisterData, Sex } from "../../types";
 import { CheckBox } from "../checkBox/CheckBox";
@@ -11,6 +12,19 @@ type Props = {
 };
 
 export const RegisterForm = ({ onRegister }: Props) => {
+  //validation
+  const shema = Yup.object().shape({
+    email: Yup.string()
+      .required("Email is a required field")
+      .email("Invalid email format"),
+    password: Yup.string()
+      .required("Password is a required field")
+      .min(8, "Password must be at least 8 characters"),
+    firstName: Yup.string().required("First name is a required field"),
+    lastName: Yup.string().required("Last name is a required field"),
+  });
+
+  //formik
   const formik = useFormik<RegisterData>({
     initialValues: {
       email: "",
@@ -22,6 +36,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
     onSubmit: (values) => {
       onRegister(values);
     },
+    validationSchema: shema,
   });
 
   //checkboxes functions
@@ -59,8 +74,13 @@ export const RegisterForm = ({ onRegister }: Props) => {
               placeholder="Fist name"
               onChange={formik.handleChange}
               value={formik.values.firstName}
-              className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+              className={`w-full font-maven font-normal text-2xl text-black-200 border-b ${
+                formik.errors.firstName ? "border-red-500" : "border-black-200 "
+              } placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none`}
             />
+            <p className="text-sm text-red-500 font-maven">
+              {formik.errors.firstName}
+            </p>
           </div>
           <div className="w-[calc(100%/2-20px/2)] mb-10 lg:w-[calc(100%/2-63px/2)] ">
             <input
@@ -69,8 +89,13 @@ export const RegisterForm = ({ onRegister }: Props) => {
               placeholder="Last name"
               onChange={formik.handleChange}
               value={formik.values.lastName}
-              className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+              className={`w-full font-maven font-normal text-2xl text-black-200 border-b ${
+                formik.errors.lastName ? "border-red-500" : "border-black-200 "
+              }  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none`}
             />
+            <p className="text-sm text-red-500 font-maven">
+              {formik.errors.lastName}
+            </p>
           </div>
           <div className="w-full mb-10 lg:w-[calc(100%/2-63px/2)]">
             <input
@@ -79,27 +104,43 @@ export const RegisterForm = ({ onRegister }: Props) => {
               placeholder="Email"
               onChange={formik.handleChange}
               value={formik.values.email}
-              className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
+              className={`w-full font-maven font-normal text-2xl text-black-200 border-b ${
+                formik.errors.email ? "border-red-500" : "border-black-200 "
+              }  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none`}
             />
+            <p className="text-sm text-red-500 font-maven">
+              {formik.errors.email}
+            </p>
           </div>
-          <div className="flex justify-between items-center w-full mb-10 border-b border-black-200 lg:w-[calc(100%/2-63px/2)]">
-            <input
-              id="password"
-              name="password"
-              placeholder="Password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              type={isPassword ? "text" : "password"}
-              className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
-            />
-            <button onClick={() => setIsPassword(!isPassword)}>
-              <img
-                src={isPassword ? eyeOffIcon : eyeIcon}
-                alt="eyeIcon"
-                className="h-10 w-10"
+          <div className=" w-full mb-10  lg:w-[calc(100%/2-63px/2)]">
+            <div
+              className={`flex justify-between items-center border-b ${
+                formik.errors.password ? "border-red-500" : "border-black-200 "
+              }`}
+            >
+              <input
+                id="password"
+                name="password"
+                placeholder="Password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                type={isPassword ? "text" : "password"}
+                className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
-            </button>
+              <button onClick={() => setIsPassword(!isPassword)}>
+                <img
+                  src={isPassword ? eyeOffIcon : eyeIcon}
+                  alt="eyeIcon"
+                  className="h-10 w-10"
+                />
+              </button>
+            </div>
+
+            <p className="text-sm text-red-500 font-maven">
+              {formik.errors.password}
+            </p>
           </div>
+
           <div className="flex justify-center w-full">
             <div className="w-full lg:w-[calc(100%/2-300px/2)] mb-5  md:mb-10 flex flex-row justify-center items-center border-b border-black-200 ">
               <label

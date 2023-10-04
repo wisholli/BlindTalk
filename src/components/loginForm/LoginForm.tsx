@@ -19,6 +19,14 @@ export const LoginForm = ({ onLogin }: Props) => {
   //show and hide password
   let [isPassword, setIsPassword] = useState<boolean>(false);
 
+  //validation
+  const shema = Yup.object().shape({
+    email: Yup.string()
+      .required("Email is a required field")
+      .email("Invalid email format"),
+    password: Yup.string().required("Password is a required field"),
+  });
+
   //formik
   const formik = useFormik<MyFormValues>({
     initialValues: {
@@ -28,6 +36,7 @@ export const LoginForm = ({ onLogin }: Props) => {
     onSubmit: (loginData: MyFormValues) => {
       onLogin(loginData);
     },
+    validationSchema: shema,
   });
 
   return (
@@ -36,31 +45,48 @@ export const LoginForm = ({ onLogin }: Props) => {
         <h1 className="font-pacifico font-normal text-5xl mb-10 text-black-200 text-center lg:mb-14 lg:text-6xl">
           Welcome back!
         </h1>
-        <input
-          id="email"
-          name="email"
-          placeholder="Email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          className="w-full font-maven font-normal text-2xl text-black-200 border-b border-black-200 mb-8 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl lg:mb-16 "
-        />
-        <div className="flex justify-between items-center border-b border-black-200 mb-8 lg:mb-16">
+        <div className="mb-8 lg:mb-16">
           <input
-            id="password"
-            name="password"
-            type={isPassword ? "text" : "password"}
-            placeholder="Password"
+            id="email"
+            name="email"
+            placeholder="Email"
             onChange={formik.handleChange}
-            value={formik.values.password}
-            className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl "
+            value={formik.values.email}
+            className={`w-full font-maven font-normal text-2xl text-black-200 border-b ${
+              formik.errors.email ? "border-red-500" : "border-black-200 "
+            }  placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl `}
           />
-          <button type="button" onClick={() => setIsPassword(!isPassword)}>
-            <img
-              src={isPassword ? eyeOffIcon : eyeIcon}
-              alt="eye-icon"
-              className="h-10 w-10"
+          <p className="text-sm text-red-500 font-maven">
+            {formik.errors.email}
+          </p>
+        </div>
+
+        <div className=" mb-8 lg:mb-16">
+          <div
+            className={`flex justify-between items-center border-b ${
+              formik.errors.password ? "border-red-500" : "border-black-200 "
+            }`}
+          >
+            <input
+              id="password"
+              name="password"
+              type={isPassword ? "text" : "password"}
+              placeholder="Password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              className="w-full font-maven font-normal text-2xl text-black-200 placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100 focus:outline-none md:placeholder:text-3xl md:text-3xl "
             />
-          </button>
+            <button type="button" onClick={() => setIsPassword(!isPassword)}>
+              <img
+                src={isPassword ? eyeOffIcon : eyeIcon}
+                alt="eye-icon"
+                className="h-10 w-10"
+              />
+            </button>
+          </div>
+          <p className="text-sm text-red-500 font-maven">
+            {formik.errors.password}
+          </p>
         </div>
 
         <div className="flex justify-center">
