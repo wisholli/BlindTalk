@@ -10,6 +10,7 @@ import Register from "./pages/registerpage/Register";
 import { ProtectedRoutes } from "./utils/ProtectedRoutes/ProtectedRoutes";
 import { ProfilePage } from "./pages/profilepage/profilePage";
 import { useAppDispatch } from "./store/store";
+import { MainLayout } from "./assets/styles/MainLayout";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,16 +26,50 @@ function App() {
 
   return (
     <div>
-      <Header />
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
-          <Route path="/" element={<Users />}></Route>
-          <Route path="/conversation/:id" element={<Conversation />}></Route>
-          <Route path="/profile/:id" element={<ProfilePage />}></Route>
+          <Route
+            path="/"
+            element={
+              <MainLayout>
+                <Users />
+              </MainLayout>
+            }
+          ></Route>
+          <Route
+            path="/conversation/:id"
+            element={
+              <MainLayout>
+                <Conversation />
+              </MainLayout>
+            }
+          ></Route>
+          <Route
+            path="/profile/:id"
+            element={
+              <MainLayout>
+                <ProfilePage />
+              </MainLayout>
+            }
+          ></Route>
         </Route>
 
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route
+          path="/register"
+          element={
+            <MainLayout>
+              <Register />
+            </MainLayout>
+          }
+        ></Route>
+        <Route
+          path="/login"
+          element={
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          }
+        ></Route>
       </Routes>
     </div>
   );
