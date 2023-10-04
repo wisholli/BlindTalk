@@ -1,6 +1,9 @@
 {
   "name": "blindtalk",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "engines": {
+    "node": "19.7.0"
+  },
   "private": true,
   "dependencies": {
     "@headlessui/react": "^0.0.0-dev.0ce63d8",
