@@ -10,6 +10,7 @@ import { ProtectedRoutes } from "./utils/ProtectedRoutes/ProtectedRoutes";
 import { ProfilePage } from "./pages/profilepage/profilePage";
 import { useAppDispatch } from "./store/store";
 import { MainLayout } from "./assets/styles/MainLayout";
+import { ErrorPageNotFound } from "./pages/errorsPages/errorPageNotFound";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -69,6 +70,7 @@ function App() {
             </MainLayout>
           }
         ></Route>
+        <Route path="*" element={<ErrorPageNotFound />}></Route>
       </Routes>
     </div>
   );
