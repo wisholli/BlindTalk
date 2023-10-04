@@ -48,12 +48,9 @@ export const Users = () => {
   };
 
   //users without current user
-  let usersWithoutCurrentUser: UserProfile[] = [];
-  if (currentUser[0]) {
-    usersWithoutCurrentUser = usersProfiles.filter(
-      (p) => p.id !== currentUser[0].profileId
-    );
-  }
+  let usersWithoutCurrentUser = usersProfiles.filter(
+    (p) => p.id !== currentUser[0].profileId
+  );
 
   //users without conversation with current user
   let creatorsAndRecipients = conversations.map(
