@@ -40,7 +40,7 @@ const Conversation = () => {
       socket.off("conneted");
       socket.off("onMessage");
     };
-  }, []);
+  }, [socket, dispatch]);
 
   //Get server data
   const { id } = useParams();
@@ -49,13 +49,14 @@ const Conversation = () => {
       dispatch(getConversationData(id));
       dispatch(getConversationMessages(id));
     }
-  }, [id]);
+  }, [id, dispatch]);
 
   //Messages scroll
   const lastMessageRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messagesData.messages[0]]);
 
   //Edit message text
@@ -65,8 +66,8 @@ const Conversation = () => {
     inputRef.current!.value = content;
   };
 
-  const handleEditMessage = (newData: EditMessageData) => {
-    dispatch(editMessage(newData));
+  const handleEditMessage = (EditMessageData: EditMessageData) => {
+    dispatch(editMessage(EditMessageData));
     inputRef.current!.value = "";
     dispatch(setNewEditMessageId(0));
   };
@@ -177,7 +178,7 @@ const Conversation = () => {
               </div>
             </div>
             <div className="flex flex-col justify-between items-center h-[calc(100vh-160px)] mt-3 mx-2">
-              {messages[0] ? (
+              {messages.length ? (
                 <div className="px-2 h-[calc(100vh-260px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg w-full">
                   <div className="flex items-center justify-center mb-3">
                     <div className="font-maven font-normal text-sm text-black-100 border-b-2 border-black-200 border-opacity-60">

@@ -1,6 +1,6 @@
 import { UserData, UserProfile } from "../../../types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { UserProfileInfoForUpdate, initialProfilesData } from "../../../types";
+import { initialProfilesData } from "../../../types";
 import { profilesApi, usersApi } from "../../../api/api";
 
 const initialState: initialProfilesData = {
@@ -17,13 +17,13 @@ export const getUsersProfiles = createAsyncThunk<UserProfile[]>(
   }
 );
 
-export const getUserProfile = createAsyncThunk<
-  UserProfileInfoForUpdate,
-  number
->("usersProfiles/getUserProfile", async function (id: number) {
-  const response = await profilesApi.getUserProfile(id);
-  return response.data;
-});
+export const getUserProfile = createAsyncThunk<UserProfile, number>(
+  "usersProfiles/getUserProfile",
+  async function (id: number) {
+    const response = await profilesApi.getUserProfile(id);
+    return response.data;
+  }
+);
 
 export const updateUserProfile = createAsyncThunk<UserProfile, UserProfile>(
   "usersProfiles/updateUserProfile",
@@ -34,11 +34,11 @@ export const updateUserProfile = createAsyncThunk<UserProfile, UserProfile>(
 );
 
 export const updateUserLastNameFirstName = createAsyncThunk<
-  Omit<UserData, "email" | "profileId">,
-  Omit<UserData, "email" | "profileId">
+  Omit<UserData, "email" | "profileId" | "profile">,
+  Omit<UserData, "email" | "profileId" | "profile">
 >(
   "usersProfiles/updateUserLastNameFirstName",
-  async function (data: Omit<UserData, "email" | "profileId">) {
+  async function (data: Omit<UserData, "email" | "profileId" | "profile">) {
     let { id, firstName, lastName } = data;
     await usersApi.updateUser(data);
     return { id, firstName, lastName };
@@ -54,26 +54,9 @@ const usersProfilesSlice = createSlice({
       state.data = payload;
     });
     builder.addCase(getUserProfile.fulfilled, (state, { payload }) => {
-      let currentUserIndex = state.data.findIndex((u) => u.id === payload.id);
-      let userProfile: UserProfile = {
-        id: payload.id!,
-        avatarUrl: payload.avatarUrl!,
-        birthDay: payload.birthDay!,
-        city: payload.city!,
-        country: payload.country!,
-        sex: payload.sex!,
-        status: payload.status!,
-        user: {
-          firstName: state.data[currentUserIndex].user.firstName,
-          lastName: state.data[currentUserIndex].user.lastName,
-          profileId: state.data[currentUserIndex].user.profileId,
-        },
-      };
-      state.currentUserProfile = userProfile;
+      state.currentUserProfile = payload;
     });
     builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
-      let currentUserIndex = state.data.findIndex((u) => u.id === payload.id);
-      if (currentUserIndex >= 0) state.data[currentUserIndex] = payload;
       state.currentUserProfile = payload;
     });
     builder.addCase(

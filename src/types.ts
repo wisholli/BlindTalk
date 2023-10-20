@@ -7,8 +7,11 @@ export type AuthData = {
 };
 
 export type initialAuthData = {
-  id: null | number;
-  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  profileId: EntityId;
+  id: EntityId;
 };
 
 export type RegisterData = {
@@ -19,13 +22,24 @@ export type RegisterData = {
   sex: Sex;
 };
 
+export type EntityId = number | null;
+
 //users data
 export type UserData = {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  profileId: number;
+  id: EntityId;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  profileId: EntityId;
+  profile: {
+    id: EntityId;
+    city: string | null;
+    country: string | null;
+    birthDay: string | null;
+    sex: string | null;
+    status: string | null;
+    avatarUrl: string | null;
+  };
 };
 
 export type initialUserData = {
@@ -103,7 +117,7 @@ export type UserProfile = {
   sex: Sex;
   status: string | null;
   avatarUrl: string | null;
-  user: Omit<UserData, "id" | "email">;
+  user: Omit<UserData, "id" | "email" | "profile">;
 };
 
 export type initialProfilesData = {
@@ -112,14 +126,7 @@ export type initialProfilesData = {
   userForUpdate: Omit<UserData, "email" | "profileId"> | null;
 };
 
-export type UserProfileInfoForUpdate = {
-  id?: number;
-  birthDay?: string | null;
-  city?: string | null;
-  country?: string | null;
-  sex?: Sex;
-  status?: string | null;
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string | null;
+export type UserProfileInfoForUpdate = Omit<UserProfile, "user"> & {
+  firstName: string;
+  lastName: string;
 };

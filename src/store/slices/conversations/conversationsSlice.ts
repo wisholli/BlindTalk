@@ -55,12 +55,12 @@ const conversationsSlice = createSlice({
       state.data = payload;
     });
     builder.addCase(getConversationData.fulfilled, (state, { payload }) => {
-      let data = state.data.filter((d) => d.id === payload.id);
+      let data = state.data.find((d) => d.id === payload.id);
       let dataForCurrentDialog: ConversationData = {
         id: payload.id,
         createdAt: payload.createdAt,
-        creator: data[0].creator,
-        recipient: data[0].recipient,
+        creator: data!.creator,
+        recipient: data!.recipient,
       };
       state.currentDialog = dataForCurrentDialog;
     });

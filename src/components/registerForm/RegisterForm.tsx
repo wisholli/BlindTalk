@@ -58,7 +58,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
   const [isPassword, setIsPassword] = useState<boolean>(false);
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center h-[calc(100vh-200px)]">
       <form
         onSubmit={formik.handleSubmit}
         className="w-full mx-4 sm:w-[calc(100%-(69px*2))]  md:w-[calc(100%-(139px*2))]  xl:w-[calc(100%-(278px*2))] "

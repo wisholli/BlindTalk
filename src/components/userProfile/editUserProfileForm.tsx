@@ -17,14 +17,14 @@ export const EditUserProfileForm = ({ setIsEditMode, onEditMode }: Props) => {
   //formik
   const formik = useFormik<UserProfileInfoForUpdate>({
     initialValues: {
-      id: currentUserProfile!.user.profileId,
+      id: currentUserProfile!.user.profileId!,
       birthDay: currentUserProfile!.birthDay,
       city: currentUserProfile!.city,
       country: currentUserProfile!.country,
       sex: currentUserProfile!.sex,
       status: currentUserProfile!.status,
-      firstName: currentUserProfile!.user!.firstName,
-      lastName: currentUserProfile!.user!.lastName,
+      firstName: currentUserProfile!.user!.firstName!,
+      lastName: currentUserProfile!.user!.lastName!,
       avatarUrl: currentUserProfile!.avatarUrl,
     },
     onSubmit: (values) => {

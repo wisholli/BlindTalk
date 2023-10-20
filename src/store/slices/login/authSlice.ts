@@ -4,7 +4,10 @@ import { AuthData, initialAuthData, RegisterData } from "../../../types";
 
 const initialState: initialAuthData = {
   id: null,
-  email: "",
+  email: null,
+  firstName: null,
+  lastName: null,
+  profileId: 0,
 };
 
 export const login = createAsyncThunk<void, AuthData>(
@@ -19,8 +22,7 @@ export const getAuthStatus = createAsyncThunk<initialAuthData>(
   "auth/getAuthStatus",
   async function () {
     const response = await authApi.getAuthStatus();
-    const { id, email }: initialAuthData = response.data;
-    return { id, email };
+    return response.data;
   }
 );
 
@@ -42,8 +44,11 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAuthStatus.fulfilled, (state, { payload }) => {
-      state.id = payload.id;
       state.email = payload.email;
+      state.id = payload.id;
+      state.profileId = payload.profileId;
+      state.firstName = payload.firstName;
+      state.lastName = payload.lastName;
     });
   },
 });

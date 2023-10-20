@@ -9,7 +9,7 @@ const initialState: initialUserData = {
 export const getUsers = createAsyncThunk<UserData[]>(
   "users/getUsers",
   async function () {
-    const response = await usersApi.getUsers();
+    const response = await usersApi.getUsersWithoutConversationWithMe();
     return response.data;
   }
 );

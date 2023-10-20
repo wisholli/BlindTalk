@@ -1,13 +1,12 @@
+import { UserProfile } from "./../types";
 import axios from "axios";
 import {
   AuthData,
-  ConversationData,
   EditMessageData,
   NewConversationData,
   RegisterData,
   SendMessageData,
   UserData,
-  UserProfileInfoForUpdate,
 } from "../types";
 
 const instance = axios.create({
@@ -28,10 +27,10 @@ export const authApi = {
 };
 
 export const usersApi = {
-  getUsers() {
-    return instance.get("/users");
+  getUsersWithoutConversationWithMe() {
+    return instance.get("users/search?withoutConversationWithMe=true");
   },
-  updateUser(data: Omit<UserData, "email" | "profileId">) {
+  updateUser(data: Omit<UserData, "email" | "profileId" | "profile">) {
     return instance.patch("/users", data);
   },
 };
@@ -67,7 +66,7 @@ export const profilesApi = {
   getUserProfile(id: number) {
     return instance.get(`profiles/${id}`);
   },
-  editUserProfile(data: UserProfileInfoForUpdate) {
+  editUserProfile(data: UserProfile) {
     return instance.patch(`profiles/${data.id}`, data);
   },
   deleteUserProfile(id: number) {

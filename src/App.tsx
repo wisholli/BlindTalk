@@ -22,7 +22,7 @@ function App() {
       dispatch(getAuthStatus()).then((data: { payload: any }) => {
         if (data.payload.id) dispatch(getConversations());
       });
-  }, []);
+  }, [dispatch, pathname]);
 
   return (
     <div>

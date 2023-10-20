@@ -1,38 +1,28 @@
 import { useEffect } from "react";
 import { getUsers } from "../../store/slices/users/usersSlice";
 import { UserCard } from "../../components/cards/UserCard";
-import {
-  createANewConversation,
-  getConversations,
-} from "../../store/slices/conversations/conversationsSlice";
-import {
-  getUserProfile,
-  getUsersProfiles,
-} from "../../store/slices/users/profilesSlice";
+import { createANewConversation } from "../../store/slices/conversations/conversationsSlice";
+import { getUserProfile } from "../../store/slices/users/profilesSlice";
 import { useNavigate } from "react-router-dom";
-import { ConversationData, UserProfile } from "../../types";
+import { ConversationData } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 
 export const Users = () => {
   const dispatch = useAppDispatch();
-  const usersProfiles = useAppSelector((state) => state.profiles.data);
   const authData = useAppSelector((state) => state.auth);
-  const userData = useAppSelector((state) => state.users);
-  const conversations = useAppSelector((state) => state.conversations.data);
-
-  let currentUser = userData.data.filter((u) => u.id === authData.id);
+  const usersWithoutConversationWithCurrentUser = useAppSelector(
+    (state) => state.users.data
+  );
 
   useEffect(() => {
     dispatch(getUsers());
-    dispatch(getConversations());
-    dispatch(getUsersProfiles());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (currentUser[0]) {
-      dispatch(getUserProfile(currentUser[0].profileId));
+    if (authData.profileId) {
+      dispatch(getUserProfile(authData.profileId));
     }
-  }, [currentUser[0]?.profileId]);
+  }, [dispatch, authData.profileId]);
 
   const message = "hi";
 
@@ -46,20 +36,6 @@ export const Users = () => {
       }
     });
   };
-
-  //users without current user
-  let usersWithoutCurrentUser = usersProfiles.filter(
-    (p) => p.id !== currentUser[0].profileId
-  );
-
-  //users without conversation with current user
-  let creatorsAndRecipients = conversations.map(
-    (c) => (c.creator.id, c.recipient.id)
-  );
-
-  let usersWithoutConversationWithCurrentUser = usersWithoutCurrentUser.filter(
-    (u) => !creatorsAndRecipients.includes(u.id)
-  );
 
   return (
     <div className="mx-2 md:mx-10 lg:mx-32 xl:mx-52">

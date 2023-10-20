@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 const Login = () => {
   const dispatch = useAppDispatch();
   const authData = useAppSelector((state) => state.auth);
+  console.log(authData);
 
   const onLogin = ({ email, password }: AuthData) => {
     dispatch(login({ email, password }));

@@ -1,21 +1,25 @@
 import { NavLink } from "react-router-dom";
-import { UserProfile } from "../../types";
+import { UserData } from "../../types";
 
-interface Props extends UserProfile {
+interface Props extends UserData {
   createConversation: (recipientId: number) => void;
 }
 
 export const UserCard = ({
   id,
-  avatarUrl,
-  birthDay,
-  city,
-  country,
-  sex,
-  status,
-  user,
+  firstName,
+  lastName,
+  profile: { avatarUrl, birthDay, city, country, sex, status },
   createConversation,
 }: Props) => {
+  const handleClick = () => {
+    if (id) {
+      createConversation(id);
+    }
+  };
+
+  let birthdayDate = birthDay?.split("-").reverse().join(".");
+
   return (
     <div className="flex justify-center mb-10">
       <div className="flex flex-col items-center gap-4 md:gap-14 lg:gap-20 md:flex-row md:justify-between">
@@ -32,10 +36,10 @@ export const UserCard = ({
           <NavLink to={`/profile/${id}`}>
             <div className="flex gap-2 justify-center items-center mb-4 md:mb-4">
               <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-5xl">
-                {user?.firstName}
+                {firstName}
               </p>
               <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-5xl">
-                {user?.lastName}
+                {lastName}
               </p>
             </div>
           </NavLink>
@@ -51,7 +55,7 @@ export const UserCard = ({
             )}
             {birthDay ? (
               <p className="m-0 font-maven font-normal text-2xl text-black-100 text-center">
-                {birthDay}
+                {birthdayDate}
               </p>
             ) : (
               <p className="m-0 font-maven font-normal text-sm text-black-100 text-center lg:text-base">
@@ -81,7 +85,7 @@ export const UserCard = ({
           </div>
           <div className="flex justify-center">
             <button
-              onClick={() => createConversation(id)}
+              onClick={handleClick}
               className="bg-green-100 py-2 px-11 rounded-3xl w-1/2"
             >
               <p className="m-0 font-maven font-medium text-base text-white">

@@ -1,4 +1,4 @@
-import { Formik, Form, Field, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AuthData } from "../../types";
 import { NavLink } from "react-router-dom";

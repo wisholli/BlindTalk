@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { UserData } from "../../types";
 import { useAppSelector } from "../../store/store";
 
