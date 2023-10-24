@@ -1,6 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { UserData } from "../../types";
 import { useAppSelector } from "../../store/store";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 interface Props {
   conversationId: number;
@@ -17,15 +18,33 @@ export const ConversationsSideBar = ({
 }: Props) => {
   const authData = useAppSelector((state) => state.auth);
 
+  let isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+
+  let { id } = useParams();
+
   const userList = (
-    <div className="px-4 py-2 bg-green-100 bg-opacity-70 border-b-2 border-white shadow-sm lg:border-b-gray-400 lg:border-l-[15px] lg:border-r-2 lg:border-r-gray-400 lg:bg-white lg:shadow-none">
+    <div
+      className={`px-4 py-2 border-b-2 ${
+        isAboveMediumScreens
+          ? `border-l-[40px] border-r-2 bg-white shadow-none${
+              isAboveMediumScreens && Number(id) === conversationId
+                ? "border-b-green-100 border-l-green-100 border-r-green-100 "
+                : "border-b-gray-400 border-l-gray-400 border-r-gray-400 "
+            } `
+          : "bg-green-100 bg-opacity-70 border-white shadow-sm"
+      }  `}
+    >
       <button onClick={setToggle}>
         <NavLink
           to={"/conversation/" + conversationId}
-          className="text-xl font-maven font-normal text-white md:text-2xl lg:text-2xl lg:text-black-100"
+          className={`${
+            isAboveMediumScreens
+              ? "text-2xl text-black-100"
+              : "text-xl font-maven font-normal text-white md:text-2xl"
+          } `}
         >
-          {authData.id === recipient.id ? (
-            <div>
+          {authData.userId === recipient.id ? (
+            <div className="">
               {creator.firstName} {creator.lastName}
             </div>
           ) : (

@@ -37,13 +37,22 @@ function App() {
             }
           ></Route>
           <Route
-            path="/conversation/:id"
+            path="/conversation"
             element={
               <MainLayout>
                 <Conversation />
               </MainLayout>
             }
-          ></Route>
+          >
+            <Route
+              path="/conversation/:id"
+              element={
+                <MainLayout>
+                  <Conversation />
+                </MainLayout>
+              }
+            ></Route>
+          </Route>
           <Route
             path="/profile/:id"
             element={

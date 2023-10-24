@@ -11,7 +11,9 @@ export type initialAuthData = {
   lastName: string | null;
   email: string | null;
   profileId: EntityId;
-  id: EntityId;
+  userId: EntityId;
+  error: EntityError;
+  isLoading: boolean;
 };
 
 export type RegisterData = {
@@ -42,8 +44,12 @@ export type UserData = {
   };
 };
 
+export type EntityError = string | null | undefined;
+
 export type initialUserData = {
-  data: UserData[];
+  users: UserData[];
+  isLoading: boolean;
+  error: EntityError;
 };
 
 //conversations data
@@ -62,9 +68,11 @@ export type NewConversationData = {
 };
 
 export type initialConversationsData = {
-  data: ConversationData[];
+  conversations: ConversationData[];
   currentDialog: null | ConversationData;
   isChatSelected: boolean;
+  error: EntityError;
+  isLoading: boolean;
 };
 
 //messages data
@@ -76,9 +84,11 @@ export type MessageData = {
 };
 
 export type initialMessagesData = {
-  id: number;
+  conversationId: number;
   messages: MessageData[];
-  editMessageId?: number;
+  editMessageId: number | null;
+  error: EntityError;
+  isLoading: boolean;
 };
 
 export type SendMessageData = {
@@ -121,12 +131,19 @@ export type UserProfile = {
 };
 
 export type initialProfilesData = {
-  data: UserProfile[];
   currentUserProfile: UserProfile | null;
+  authorizedUserAvatar: string | null;
   userForUpdate: Omit<UserData, "email" | "profileId"> | null;
+  isLoading: boolean;
+  error: EntityError;
 };
 
 export type UserProfileInfoForUpdate = Omit<UserProfile, "user"> & {
   firstName: string;
   lastName: string;
+};
+
+export type ValidationErrors = {
+  statusCode: number;
+  message: string;
 };

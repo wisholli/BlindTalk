@@ -22,6 +22,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
       .min(8, "Password must be at least 8 characters"),
     firstName: Yup.string().required("First name is a required field"),
     lastName: Yup.string().required("Last name is a required field"),
+    sex: Yup.string().required("Sex is a required field"),
   });
 
   //formik
@@ -58,7 +59,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
   const [isPassword, setIsPassword] = useState<boolean>(false);
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+    <div className="flex items-center justify-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
       <form
         onSubmit={formik.handleSubmit}
         className="w-full mx-4 sm:w-[calc(100%-(69px*2))]  md:w-[calc(100%-(139px*2))]  xl:w-[calc(100%-(278px*2))] "
@@ -127,7 +128,7 @@ export const RegisterForm = ({ onRegister }: Props) => {
                 type={isPassword ? "text" : "password"}
                 className="w-full font-maven font-normal text-2xl text-black-200   placeholder:font-maven placeholder:font-normal placeholder:text-2xl placeholder:text-gray-100  md:text-3xl md:placeholder:text-3xl focus:outline-none"
               />
-              <button onClick={() => setIsPassword(!isPassword)}>
+              <button type="button" onClick={() => setIsPassword(!isPassword)}>
                 <img
                   src={isPassword ? eyeOffIcon : eyeIcon}
                   alt="eyeIcon"
@@ -141,8 +142,12 @@ export const RegisterForm = ({ onRegister }: Props) => {
             </p>
           </div>
 
-          <div className="flex justify-center w-full">
-            <div className="w-full lg:w-[calc(100%/2-300px/2)] mb-5  md:mb-10 flex flex-row justify-center items-center border-b border-black-200 ">
+          <div className="flex justify-center w-full ">
+            <div
+              className={`w-full lg:w-[calc(100%/2-300px/2)] flex justify-center items-center border-b ${
+                formik.errors.sex ? "border-red-500" : "border-black-200 "
+              }`}
+            >
               <label
                 htmlFor="sex"
                 className="font-maven font-normal text-gray-100 text-2xl mr-5 md:text-3xl md:mr-10"
@@ -175,9 +180,14 @@ export const RegisterForm = ({ onRegister }: Props) => {
               </label>
             </div>
           </div>
+          <div className="flex justify-center items-center w-full">
+            <p className="text-sm text-red-500 font-maven ">
+              {formik.errors.sex}
+            </p>
+          </div>
         </div>
 
-        <div className="text-center">
+        <div className="flex flex-col justify-center items-center w-full mt-5 lg:mt-10">
           <button
             type="submit"
             className="border rounded-[48px] bg-green-100 font-maven w-full text-2xl  text-white font-medium py-3 px-28  mb-2 lg:w-auto lg:text-4xl "

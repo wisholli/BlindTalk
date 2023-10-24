@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "./../../assets/images/logo.svg";
 import menuIcon from "./../../assets/images/menu-icon.svg";
 import { useAppSelector } from "../../store/store";
@@ -20,17 +20,18 @@ export const Header = () => {
     setIsProfile(!isProfile);
   };
 
-  let id = conversationData.data[0]?.id;
+  let conversationId = conversationData.conversations.length
+    ? conversationData.conversations[conversationData.conversations.length - 1]
+        .id
+    : null;
 
   let isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-
-  const { path } = useParams();
 
   return (
     <div className="sticky top-0 z-10 bg-white shadow-md w-full">
       <div
         className={`w-11/12 mx-auto py-3 ${
-          path !== "/conversation/" && isAboveMediumScreens ? "mb-10" : "mb-0"
+          isAboveMediumScreens ? "mb-10" : "mb-0"
         }`}
       >
         <div className="flex justify-between items-center">
@@ -39,9 +40,8 @@ export const Header = () => {
           </NavLink>
           {isAboveMediumScreens ? (
             <DesktopNavBar
-              id={id}
+              id={conversationId}
               isProfile={isProfile}
-              currentUserProfile={currentUserProfile}
               handleProfile={handleProfile}
             />
           ) : (
@@ -54,7 +54,7 @@ export const Header = () => {
           )}
           {!isAboveMediumScreens && isToggled && (
             <MobileNavBar
-              id={id}
+              id={conversationId}
               currentUserProfile={currentUserProfile}
               isToggled={isToggled}
               handleClick={setToggle}

@@ -60,16 +60,10 @@ export const messagesApi = {
 };
 
 export const profilesApi = {
-  getProfiles() {
-    return instance.get(`profiles`);
-  },
   getUserProfile(id: number) {
     return instance.get(`profiles/${id}`);
   },
   editUserProfile(data: UserProfile) {
     return instance.patch(`profiles/${data.id}`, data);
-  },
-  deleteUserProfile(id: number) {
-    return instance.delete(`profiles/${id}`);
   },
 };

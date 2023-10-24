@@ -7,14 +7,26 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 const Register = () => {
   const dispatch = useAppDispatch();
 
-  const authData = useAppSelector((state) => state.auth);
+  const { userId, profileId, isLoading } = useAppSelector(
+    (state) => state.auth
+  );
 
-  const onRegister = (data: RegisterData) => {
-    dispatch(register(data));
+  const onRegister = (registerData: RegisterData) => {
+    dispatch(register(registerData));
   };
 
-  if (authData.id) {
-    return <Navigate to={`/profile/${authData.id}`} />;
+  if (userId) {
+    return <Navigate to={`/profile/${profileId}`} />;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
+        <p className="font-pacifico text-black-100 text-2xl text-center">
+          Loading...
+        </p>
+      </div>
+    );
   }
 
   return <RegisterForm onRegister={onRegister} />;

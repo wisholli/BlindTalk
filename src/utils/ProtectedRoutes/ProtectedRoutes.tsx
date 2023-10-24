@@ -3,7 +3,7 @@ import { useAppSelector } from "../../store/store";
 
 export const ProtectedRoutes = () => {
   const authData = useAppSelector((state) => state.auth);
-  if (!authData.id) {
+  if (!authData.userId) {
     return <Navigate to={"/register"} />;
   }
   return <Outlet />;

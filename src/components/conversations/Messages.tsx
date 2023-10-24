@@ -23,7 +23,7 @@ export const Messages = ({
   };
 
   if (author?.id) {
-    if (authData.id === author?.id) {
+    if (authData.userId === author?.id) {
       return (
         <div className="w-full">
           <div className="flex justify-end relative">

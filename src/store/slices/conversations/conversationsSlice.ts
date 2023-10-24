@@ -2,40 +2,77 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   ConversationData,
   NewConversationData,
+  ValidationErrors,
   initialConversationsData,
 } from "../../../types";
 import { converationsApi } from "../../../api/api";
+import { AxiosError } from "axios";
 
 const initialState: initialConversationsData = {
-  data: [],
+  conversations: [],
   currentDialog: null,
   isChatSelected: false,
+  error: null,
+  isLoading: false,
 };
 
 export const createANewConversation = createAsyncThunk<
   ConversationData,
-  NewConversationData
+  NewConversationData,
+  { rejectValue: ValidationErrors }
 >(
   "conversations/createNewConversation",
-  async function (data: NewConversationData) {
-    const response = await converationsApi.createANewConversation(data);
-    return response.data;
+  async (data: NewConversationData, { rejectWithValue }) => {
+    try {
+      const response = await converationsApi.createANewConversation(data);
+      return response.data;
+    } catch (err) {
+      let error: AxiosError<ValidationErrors> =
+        err as AxiosError<ValidationErrors>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
-export const getConversations = createAsyncThunk<ConversationData[]>(
-  "conversations/getConversations",
-  async function () {
+export const getConversations = createAsyncThunk<
+  ConversationData[],
+  void,
+  { rejectValue: ValidationErrors }
+>("conversations/getConversations", async (_, { rejectWithValue }) => {
+  try {
     const response = await converationsApi.getConversations();
     return response.data;
+  } catch (err) {
+    let error: AxiosError<ValidationErrors> =
+      err as AxiosError<ValidationErrors>;
+    if (!error.response) {
+      throw err;
+    }
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
-export const getConversationData = createAsyncThunk<ConversationData, string>(
+export const getConversationData = createAsyncThunk<
+  ConversationData,
+  string,
+  { rejectValue: ValidationErrors }
+>(
   "conversations/getConversationData",
-  async function (id: string) {
-    const response = await converationsApi.getConversationData(id);
-    return response.data;
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await converationsApi.getConversationData(id);
+      return response.data;
+    } catch (err) {
+      let error: AxiosError<ValidationErrors> =
+        err as AxiosError<ValidationErrors>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -48,22 +85,67 @@ const conversationsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(createANewConversation.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(createANewConversation.fulfilled, (state, { payload }) => {
-      state.data = [...state.data, payload];
+      state.conversations = [...state.conversations, payload];
+      state.isLoading = false;
+    });
+    builder.addCase(
+      createANewConversation.rejected,
+      (state, { payload, error }) => {
+        if (payload) {
+          state.error = payload.message;
+        } else {
+          state.error = error.message;
+        }
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(getConversations.pending, (state) => {
+      state.isLoading = true;
     });
     builder.addCase(getConversations.fulfilled, (state, { payload }) => {
-      state.data = payload;
+      state.conversations = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(getConversations.rejected, (state, { payload, error }) => {
+      if (payload) {
+        state.error = payload.message;
+      } else {
+        state.error = error.message;
+      }
+      state.isLoading = false;
+    });
+    builder.addCase(getConversationData.pending, (state) => {
+      state.isLoading = true;
     });
     builder.addCase(getConversationData.fulfilled, (state, { payload }) => {
-      let data = state.data.find((d) => d.id === payload.id);
-      let dataForCurrentDialog: ConversationData = {
-        id: payload.id,
-        createdAt: payload.createdAt,
-        creator: data!.creator,
-        recipient: data!.recipient,
-      };
-      state.currentDialog = dataForCurrentDialog;
+      if (state.conversations.length) {
+        let data = state.conversations.find((d) => d.id === payload.id);
+        let dataForCurrentDialog: ConversationData = {
+          id: payload.id,
+          createdAt: payload.createdAt,
+          creator: data!.creator,
+          recipient: data!.recipient,
+        };
+        state.currentDialog = dataForCurrentDialog;
+      }
+
+      state.isLoading = false;
     });
+    builder.addCase(
+      getConversationData.rejected,
+      (state, { error, payload }) => {
+        if (payload) {
+          state.error = payload.message;
+        } else {
+          state.error = error.message;
+        }
+        state.isLoading = false;
+      }
+    );
   },
 });
 

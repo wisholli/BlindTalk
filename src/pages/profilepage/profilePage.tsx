@@ -4,18 +4,16 @@ import { CurrentUserProfile } from "../../components/userProfile/currentUserProf
 import { UserProfile, UserProfileInfoForUpdate } from "../../types";
 import {
   getUserProfile,
-  updateUserLastNameFirstName,
   updateUserProfile,
 } from "../../store/slices/users/profilesSlice";
-import { getUsers } from "../../store/slices/users/usersSlice";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Headline } from "../../utils/Headline/Headline";
 
 export const ProfilePage = () => {
   let authData = useAppSelector((state) => state.auth);
-  let currentUserProfileData = useAppSelector(
-    (state) => state.profiles.currentUserProfile
+  let { currentUserProfile, error, isLoading } = useAppSelector(
+    (state) => state.profiles
   );
 
   //actions
@@ -26,14 +24,10 @@ export const ProfilePage = () => {
 
   //get data for server
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (authData.profileId) {
-      dispatch(getUserProfile(authData.profileId));
+    if (id) {
+      dispatch(getUserProfile(Number(id)));
     }
-  }, [authData.profileId, dispatch]);
+  }, [id, dispatch]);
 
   //toggler for enabling edit profile form
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -60,23 +54,41 @@ export const ProfilePage = () => {
       user: {
         firstName: firstName,
         lastName: lastName,
-        profileId: currentUserProfileData!.user.profileId,
+        profileId: currentUserProfile!.user.profileId,
       },
     };
     dispatch(updateUserProfile(updatedUserData));
-    if (firstName && lastName && id)
-      dispatch(updateUserLastNameFirstName({ firstName, lastName, id }));
   };
 
   //headline
-  let headlineForSelectedUser = `${currentUserProfileData?.user.firstName} 
-    ${currentUserProfileData?.user.lastName}
+  let headlineForSelectedUser = `${currentUserProfile?.user.firstName} 
+    ${currentUserProfile?.user.lastName}
     profile`;
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
+        <p className="font-pacifico text-black-100 text-2xl text-center">
+          {error}
+        </p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
+        <p className="font-pacifico text-black-100 text-2xl text-center">
+          Loading...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-11/12 mx-auto xl:w-3/4">
       <div className="flex justify-center mt-5 lg:mt-0">
-        {Number(id) === authData.id ? (
+        {Number(id) === authData.userId ? (
           <Headline text="My profile" />
         ) : (
           <Headline text={headlineForSelectedUser} />
@@ -84,17 +96,15 @@ export const ProfilePage = () => {
       </div>
 
       <div className="flex justify-center lg:gap-10 flex-col lg:flex-row w-full items-center">
-        {currentUserProfileData?.id && (
-          <div>
-            {currentUserProfileData?.avatarUrl != null && (
-              <img
-                src={currentUserProfileData?.avatarUrl}
-                alt="userphoto"
-                className="rounded-full h-52 w-52 md:h-72 md:w-72 lg:h-96 lg:w-96"
-              />
-            )}
-          </div>
-        )}
+        <div>
+          {currentUserProfile?.avatarUrl != null && (
+            <img
+              src={currentUserProfile?.avatarUrl}
+              alt="userphoto"
+              className="rounded-full h-52 w-52 md:h-72 md:w-72 lg:h-96 lg:w-96"
+            />
+          )}
+        </div>
 
         {isEditMode ? (
           <EditUserProfileForm

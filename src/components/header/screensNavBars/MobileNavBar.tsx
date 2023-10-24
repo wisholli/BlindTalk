@@ -6,11 +6,10 @@ interface IMobileNavBarProps {
   handleClick: (v: boolean) => void;
   isToggled: boolean;
   currentUserProfile: UserProfile | null;
-  id: number;
+  id: number | null;
 }
 
 export const MobileNavBar = ({
-  id,
   isToggled,
   currentUserProfile,
   handleClick,
@@ -31,12 +30,12 @@ export const MobileNavBar = ({
             to={"/"}
             className="font-maven font-normal text-2xl text-black-100"
           >
-            Find new friend
+            Find new friends
           </NavLink>
         </button>
         <button onClick={() => handleClick(false)}>
           <NavLink
-            to={id ? `/conversation/${id}` : "/conversation/0"}
+            to="/conversation"
             className="font-maven font-normal text-2xl text-black-100"
           >
             Conversations
@@ -44,7 +43,7 @@ export const MobileNavBar = ({
         </button>
         <button onClick={() => handleClick(false)}>
           <NavLink
-            to={`/profile/${currentUserProfile?.id}`}
+            to={`/profile/${currentUserProfile?.user.profileId}`}
             className="font-maven font-normal text-2xl text-black-100"
           >
             Profile

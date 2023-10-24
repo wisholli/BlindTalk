@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { AuthData } from "../../types";
+import { AuthData, EntityError } from "../../types";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import eyeIcon from "../../assets/images/eye-icon.svg";
@@ -8,6 +8,7 @@ import eyeOffIcon from "../../assets/images/eye-off-icon.svg";
 
 type Props = {
   onLogin: ({ email, password }: AuthData) => void;
+  error: EntityError;
 };
 
 interface MyFormValues {
@@ -15,7 +16,9 @@ interface MyFormValues {
   password: string;
 }
 
-export const LoginForm = ({ onLogin }: Props) => {
+export const LoginForm = ({ onLogin, error }: Props) => {
+  console.log(error);
+
   //show and hide password
   let [isPassword, setIsPassword] = useState<boolean>(false);
 
@@ -40,8 +43,11 @@ export const LoginForm = ({ onLogin }: Props) => {
   });
 
   return (
-    <div className=" mt-24 mx-4 md:mx-36 lg:mt-32 lg:mx-96">
-      <form onSubmit={formik.handleSubmit}>
+    <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-150px)]">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="w-11/12 mx-auto md:w-3/4 lg:w-2/5"
+      >
         <h1 className="font-pacifico font-normal text-5xl mb-10 text-black-200 text-center lg:mb-14 lg:text-6xl">
           Welcome back!
         </h1>
@@ -86,6 +92,7 @@ export const LoginForm = ({ onLogin }: Props) => {
           </div>
           <p className="text-sm text-red-500 font-maven">
             {formik.errors.password}
+            {error && `${error}: The email or password is entered incorrectly`}
           </p>
         </div>
 

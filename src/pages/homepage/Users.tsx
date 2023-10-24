@@ -9,20 +9,18 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 
 export const Users = () => {
   const dispatch = useAppDispatch();
-  const authData = useAppSelector((state) => state.auth);
-  const usersWithoutConversationWithCurrentUser = useAppSelector(
-    (state) => state.users.data
-  );
+  const { profileId } = useAppSelector((state) => state.auth);
+  const { error, isLoading, users } = useAppSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
 
   useEffect(() => {
-    if (authData.profileId) {
-      dispatch(getUserProfile(authData.profileId));
+    if (profileId) {
+      dispatch(getUserProfile(profileId));
     }
-  }, [dispatch, authData.profileId]);
+  }, [dispatch, profileId]);
 
   const message = "hi";
 
@@ -37,6 +35,26 @@ export const Users = () => {
     });
   };
 
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
+        <p className="font-pacifico text-black-100 text-2xl text-center">
+          {error}
+        </p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
+        <p className="font-pacifico text-black-100 text-2xl text-center">
+          Loading...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-2 md:mx-10 lg:mx-32 xl:mx-52">
       <div className="flex flex-col justify-center ">
@@ -44,7 +62,7 @@ export const Users = () => {
           Find your new friend!
         </h1>
         <div className="mt-10 h-[calc(100vh-180px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg px-2 md:h-[calc(100vh-210px)] md:mt-5 lg:h-[calc(100vh-250px)] lg:mt-0">
-          {usersWithoutConversationWithCurrentUser.map((u) => {
+          {users.map((u) => {
             return (
               <UserCard
                 key={u.id}

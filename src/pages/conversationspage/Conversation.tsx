@@ -4,8 +4,8 @@ import {
   editMessage,
   getConversationMessages,
   receiveMessage,
+  resetEdaitMessageId,
   sendMessage,
-  setNewEditMessageId,
 } from "../../store/slices/messages/messagesSlice";
 import {
   getConversationData,
@@ -18,10 +18,12 @@ import SendMessageForm from "../../components/conversations/SendMessageForm";
 import { EditMessageData } from "../../types";
 import { SocketContext } from "../../utils/SocketContext/SocketContext";
 import { useAppDispatch, useAppSelector } from "../../store/store";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 const Conversation = () => {
   const dispatch = useAppDispatch();
-  const conversationData = useAppSelector((state) => state.conversations);
+  const { conversations, currentDialog, isChatSelected, error, isLoading } =
+    useAppSelector((state) => state.conversations);
   const messagesData = useAppSelector((state) => state.messages);
   const authData = useAppSelector((state) => state.auth);
 
@@ -45,7 +47,7 @@ const Conversation = () => {
   //Get server data
   const { id } = useParams();
   useEffect(() => {
-    if (id) {
+    if (conversations.length && id) {
       dispatch(getConversationData(id));
       dispatch(getConversationMessages(id));
     }
@@ -69,11 +71,11 @@ const Conversation = () => {
   const handleEditMessage = (EditMessageData: EditMessageData) => {
     dispatch(editMessage(EditMessageData));
     inputRef.current!.value = "";
-    dispatch(setNewEditMessageId(0));
+    dispatch(resetEdaitMessageId());
   };
 
   //Send message action
-  let conversationId = conversationData.currentDialog?.id;
+  let conversationId = currentDialog?.id;
 
   const sendNewMessage = (content: string) => {
     if (conversationId) {
@@ -94,38 +96,71 @@ const Conversation = () => {
     ))
     .reverse();
 
+  let isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
+        <p className="font-pacifico text-black-100 text-2xl text-center">
+          {error}
+        </p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-200px)]">
+        <p className="font-pacifico text-black-100 text-2xl text-center">
+          Loading...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div className="hidden w-full lg:flex">
-        <div className=" w-1/4 pr-2 overflow-y-scroll h-[calc(100vh-130px)] scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
+      <div className={`${isAboveMediumScreens ? "flex" : "hidden w-full"}`}>
+        <div className="w-2/5 xl:w-1/4 pr-2 overflow-y-scroll h-[calc(100vh-130px)] scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
           <div className="border-t-2 border-gray-400">
-            {conversationData.data.map((dialog) => (
-              <ConversationsSideBar
-                key={dialog.id}
-                conversationId={dialog.id}
-                recipient={dialog.recipient}
-                creator={dialog.creator}
-              />
-            ))}
+            {conversations.length ? (
+              <>
+                {conversations.map((dialog) => (
+                  <ConversationsSideBar
+                    key={dialog.id}
+                    conversationId={dialog.id}
+                    recipient={dialog.recipient}
+                    creator={dialog.creator}
+                  />
+                ))}
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <div className="w-5/6 flex flex-col justify-between gap-5">
-          {messages[0] ? (
+          {messages.length && conversations.length ? (
             <div className="mx-16 pr-5 h-[calc(100vh-308px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
               <div className="flex items-center justify-center">
                 <div className="font-maven font-normal text-xl text-black-100 border-b-2 border-black-200 border-opacity-60">
-                  {moment(conversationData.currentDialog?.createdAt)
-                    .utc()
-                    .format("DD MMM YYYY")}
+                  {moment(currentDialog?.createdAt).utc().format("DD MMM YYYY")}
                 </div>
               </div>
               {messages}
             </div>
           ) : (
             <div className="flex justify-center mt-56">
-              <p className="font-pacifico text-black-100 text-4xl">
-                Send your first message
-              </p>
+              {conversations.length ? (
+                <p className="font-pacifico text-black-100 text-4xl">
+                  Send your first message
+                </p>
+              ) : (
+                <p className="font-pacifico text-black-100 text-2xl">
+                  Please go to the "Find new friends" page and send your first
+                  message
+                </p>
+              )}
             </div>
           )}
           <SendMessageForm
@@ -135,54 +170,63 @@ const Conversation = () => {
           />
         </div>
       </div>
-      <div className="lg:hidden">
+      <div className={`${isAboveMediumScreens && "hidden"}`}>
         <div
-          className={` ${
-            conversationData.isChatSelected && "hidden"
-          } overflow-y-scroll h-[calc(100vh-130px)]`}
+          className={` ${isChatSelected && "hidden"} ${
+            conversations.length && "overflow-y-scroll"
+          } h-[calc(100vh-130px)]`}
         >
-          {conversationData.data.map((dialog) => (
-            <ConversationsSideBar
-              key={dialog.id}
-              conversationId={dialog.id}
-              recipient={dialog.recipient}
-              creator={dialog.creator}
-              setToggle={setSelectedStatus}
-            />
-          ))}
+          {conversations.length ? (
+            <>
+              {conversations.map((dialog) => (
+                <ConversationsSideBar
+                  key={dialog.id}
+                  conversationId={dialog.id}
+                  recipient={dialog.recipient}
+                  creator={dialog.creator}
+                />
+              ))}
+            </>
+          ) : (
+            <div className="flex items-center justify-center h-[calc(100vh-100px)]">
+              <p className="font-pacifico text-black-100 text-2xl text-center mx-10">
+                Please go to the "Find new friends" page and send your first
+                message
+              </p>
+            </div>
+          )}
         </div>
-        {conversationData.isChatSelected && (
+        {isChatSelected && (
           <div>
             <div className="border-none bg-green-100 px-3 py-4">
               <div className="flex justify-center items-center">
-                {authData.email ===
-                conversationData.currentDialog?.creator.email ? (
+                {authData.email === currentDialog?.creator.email ? (
                   <button onClick={setSelectedStatus} className="flex gap-1">
                     <div className="font-maven font-normal text-xl text-white">
-                      {conversationData.currentDialog.recipient.firstName}
+                      {currentDialog.recipient.firstName}
                     </div>
                     <div className="font-maven font-normal text-xl text-white">
-                      {conversationData.currentDialog.recipient.lastName}
+                      {currentDialog.recipient.lastName}
                     </div>
                   </button>
                 ) : (
                   <button onClick={setSelectedStatus} className="flex gap-1">
                     <div className="font-maven font-normal text-xl text-white">
-                      {conversationData.currentDialog?.creator.firstName}
+                      {currentDialog?.creator.firstName}
                     </div>
                     <div className="font-maven font-normal text-xl text-white">
-                      {conversationData.currentDialog?.creator.lastName}
+                      {currentDialog?.creator.lastName}
                     </div>
                   </button>
                 )}
               </div>
             </div>
             <div className="flex flex-col justify-between items-center h-[calc(100vh-160px)] mt-3 mx-2">
-              {messages.length ? (
+              {messages.length && conversations.length ? (
                 <div className="px-2 h-[calc(100vh-260px)] overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg w-full">
                   <div className="flex items-center justify-center mb-3">
                     <div className="font-maven font-normal text-sm text-black-100 border-b-2 border-black-200 border-opacity-60">
-                      {moment(conversationData.currentDialog?.createdAt)
+                      {moment(currentDialog?.createdAt)
                         .utc()
                         .format("DD MMM YYYY")}
                     </div>

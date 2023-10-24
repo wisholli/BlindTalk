@@ -6,15 +6,15 @@ interface Props extends UserData {
 }
 
 export const UserCard = ({
-  id,
   firstName,
   lastName,
+  profileId,
   profile: { avatarUrl, birthDay, city, country, sex, status },
   createConversation,
 }: Props) => {
   const handleClick = () => {
-    if (id) {
-      createConversation(id);
+    if (profileId) {
+      createConversation(profileId);
     }
   };
 
@@ -25,7 +25,7 @@ export const UserCard = ({
       <div className="flex flex-col items-center gap-4 md:gap-14 lg:gap-20 md:flex-row md:justify-between">
         <img
           src={
-            avatarUrl !== null
+            avatarUrl
               ? avatarUrl
               : "https://cdn-icons-png.flaticon.com/512/666/666201.png"
           }
@@ -33,7 +33,7 @@ export const UserCard = ({
           className="rounded-full h-32 w-32 sm:h-56 sm:w-56 lg:h-64 lg:w-64 xl:h-80 xl:w-80"
         />
         <div className="flex flex-col md:w-[calc(100vw-(40px*2+56px+224px))] lg:w-[calc(100vw-(128px*2+80px+256px))] xl:w-[calc(100vw-(208px*2+80px+320px))]">
-          <NavLink to={`/profile/${id}`}>
+          <NavLink to={`/profile/${profileId}`}>
             <div className="flex gap-2 justify-center items-center mb-4 md:mb-4">
               <p className="m-0 font-maven font-normal text-4xl text-black-100  lg:text-5xl">
                 {firstName}

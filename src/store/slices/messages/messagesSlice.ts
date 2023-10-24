@@ -3,37 +3,84 @@ import { messagesApi } from "../../../api/api";
 import {
   EditMessageData,
   initialMessagesData,
+  MessageData,
   SendMessageData,
+  ValidationErrors,
 } from "../../../types";
+import { AxiosError } from "axios";
 
 const initialState: initialMessagesData = {
-  id: 0,
+  conversationId: 0,
   messages: [],
   editMessageId: 0,
+  error: null,
+  isLoading: true,
 };
 
-export const getConversationMessages = createAsyncThunk<
-  initialMessagesData,
-  string
->("messages/getConversationMessages", async function (conversationId: string) {
-  const response = await messagesApi.getMessages(conversationId);
-  const { id, messages } = response.data;
-  return { id, messages };
-});
+interface IMessageFromServer {
+  id: number;
+  messages: MessageData[];
+}
 
-export const sendMessage = createAsyncThunk(
-  "messages/sendMessage",
-  async function (data: SendMessageData) {
-    await messagesApi.sendMessage(data);
+export const getConversationMessages = createAsyncThunk<
+  IMessageFromServer,
+  string,
+  { rejectValue: ValidationErrors }
+>(
+  "messages/getConversationMessages",
+  async (conversationId: string, { rejectWithValue }) => {
+    try {
+      const response = await messagesApi.getMessages(conversationId);
+      return response.data;
+    } catch (err) {
+      let error: AxiosError<ValidationErrors> =
+        err as AxiosError<ValidationErrors>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
-export const editMessage = createAsyncThunk<EditMessageData, EditMessageData>(
+export const sendMessage = createAsyncThunk<
+  void,
+  SendMessageData,
+  { rejectValue: ValidationErrors }
+>(
+  "messages/sendMessage",
+  async (data: SendMessageData, { rejectWithValue }) => {
+    try {
+      await messagesApi.sendMessage(data);
+    } catch (err) {
+      let error: AxiosError<ValidationErrors> =
+        err as AxiosError<ValidationErrors>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editMessage = createAsyncThunk<
+  EditMessageData,
+  EditMessageData,
+  { rejectValue: ValidationErrors }
+>(
   "messages/editMessage",
-  async function (newData: EditMessageData) {
-    await messagesApi.editMessage(newData);
-    const { messageId, content } = newData;
-    return { messageId, content };
+  async (newData: EditMessageData, { rejectWithValue }) => {
+    try {
+      await messagesApi.editMessage(newData);
+      return newData;
+    } catch (err) {
+      let error: AxiosError<ValidationErrors> =
+        err as AxiosError<ValidationErrors>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -47,11 +94,39 @@ const messagesSlice = createSlice({
     setNewEditMessageId: (state, { payload }) => {
       state.editMessageId = payload;
     },
+    resetEdaitMessageId: (state) => {
+      state.editMessageId = null;
+    },
   },
   extraReducers: (builder) => {
+    builder.addCase(getConversationMessages.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(getConversationMessages.fulfilled, (state, { payload }) => {
-      state.id = payload.id;
+      state.conversationId = payload.id;
       state.messages = payload.messages;
+      state.isLoading = false;
+    });
+    builder.addCase(
+      getConversationMessages.rejected,
+      (state, { error, payload }) => {
+        if (payload) {
+          state.error = payload.message;
+        } else {
+          state.error = error.message;
+        }
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(sendMessage.rejected, (state, { error, payload }) => {
+      if (payload) {
+        state.error = payload.message;
+      } else {
+        state.error = error.message;
+      }
+    });
+    builder.addCase(editMessage.pending, (state) => {
+      state.isLoading = true;
     });
     builder.addCase(editMessage.fulfilled, (state, { payload }) => {
       state.messages = state.messages.map((m) => {
@@ -60,9 +135,19 @@ const messagesSlice = createSlice({
         }
         return m;
       });
+      state.isLoading = false;
+    });
+    builder.addCase(editMessage.rejected, (state, { error, payload }) => {
+      if (payload) {
+        state.error = payload.message;
+      } else {
+        state.error = error.message;
+      }
+      state.isLoading = false;
     });
   },
 });
 
-export const { receiveMessage, setNewEditMessageId } = messagesSlice.actions;
+export const { receiveMessage, setNewEditMessageId, resetEdaitMessageId } =
+  messagesSlice.actions;
 export default messagesSlice.reducer;
