@@ -1,19 +1,20 @@
 import { NavLink } from "react-router-dom";
-import { UserProfile } from "../../../types";
 import closeIcon from "../../../assets/images/close-icon.svg";
+import { useAppSelector } from "../../../store/store";
 
 interface IMobileNavBarProps {
   handleClick: (v: boolean) => void;
   isToggled: boolean;
-  currentUserProfile: UserProfile | null;
   id: number | null;
 }
 
 export const MobileNavBar = ({
   isToggled,
-  currentUserProfile,
   handleClick,
 }: IMobileNavBarProps) => {
+  const authorizedUserProfileId = useAppSelector(
+    (state) => state.auth.profileId
+  );
   return (
     <div className="fixed z-20 shadow-xl right-0 top-0 h-full w-2/3 bg-white px-4 py-2 ">
       <div className="flex justify-end mb-10 my-5">
@@ -43,7 +44,7 @@ export const MobileNavBar = ({
         </button>
         <button onClick={() => handleClick(false)}>
           <NavLink
-            to={`/profile/${currentUserProfile?.user.profileId}`}
+            to={`/profile/${authorizedUserProfileId}`}
             className="font-maven font-normal text-2xl text-black-100"
           >
             Profile

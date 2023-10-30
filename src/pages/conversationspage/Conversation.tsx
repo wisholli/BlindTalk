@@ -51,7 +51,7 @@ const Conversation = () => {
       dispatch(getConversationData(id));
       dispatch(getConversationMessages(id));
     }
-  }, [id, dispatch]);
+  }, [id, dispatch, conversations.length]);
 
   //Messages scroll
   const lastMessageRef = useRef<null | HTMLDivElement>(null);
@@ -184,6 +184,7 @@ const Conversation = () => {
                   conversationId={dialog.id}
                   recipient={dialog.recipient}
                   creator={dialog.creator}
+                  setToggle={setSelectedStatus}
                 />
               ))}
             </>

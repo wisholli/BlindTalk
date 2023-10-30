@@ -20,7 +20,6 @@ export const DesktopNavBar = ({
   );
 
   const conversations = useAppSelector((state) => state.conversations);
-  console.log(conversations.conversations.length);
   return (
     <div className="flex items-center gap-10">
       <NavLink

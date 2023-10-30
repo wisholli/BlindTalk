@@ -34,26 +34,25 @@ export const ConversationsSideBar = ({
           : "bg-green-100 bg-opacity-70 border-white shadow-sm"
       }  `}
     >
-      <button onClick={setToggle}>
-        <NavLink
-          to={"/conversation/" + conversationId}
-          className={`${
-            isAboveMediumScreens
-              ? "text-2xl text-black-100"
-              : "text-xl font-maven font-normal text-white md:text-2xl"
-          } `}
-        >
-          {authData.userId === recipient.id ? (
-            <div className="">
-              {creator.firstName} {creator.lastName}
-            </div>
-          ) : (
-            <div>
-              {recipient.firstName} {recipient.lastName}
-            </div>
-          )}
-        </NavLink>
-      </button>
+      <NavLink
+        to={"/conversation/" + conversationId}
+        className={`${
+          isAboveMediumScreens
+            ? "text-2xl text-black-100"
+            : "text-xl font-maven font-normal text-white md:text-2xl"
+        } `}
+        onClick={setToggle}
+      >
+        {authData.userId === recipient.id ? (
+          <div className="">
+            {creator.firstName} {creator.lastName}
+          </div>
+        ) : (
+          <div>
+            {recipient.firstName} {recipient.lastName}
+          </div>
+        )}
+      </NavLink>
     </div>
   );
 

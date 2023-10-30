@@ -17,8 +17,6 @@ interface MyFormValues {
 }
 
 export const LoginForm = ({ onLogin, error }: Props) => {
-  console.log(error);
-
   //show and hide password
   let [isPassword, setIsPassword] = useState<boolean>(false);
 

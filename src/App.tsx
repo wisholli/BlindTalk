@@ -18,10 +18,11 @@ function App() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!["/register", "/login"].includes(pathname))
+    if (!["/register", "/login", "/"].includes(pathname)) {
       dispatch(getAuthStatus()).then((data: { payload: any }) => {
         if (data.payload.id) dispatch(getConversations());
       });
+    }
   }, [dispatch, pathname]);
 
   return (

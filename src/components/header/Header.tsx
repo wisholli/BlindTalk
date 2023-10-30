@@ -12,9 +12,6 @@ export const Header = () => {
   const [isProfile, setIsProfile] = useState<boolean>(false);
 
   const conversationData = useAppSelector((state) => state.conversations);
-  const currentUserProfile = useAppSelector(
-    (state) => state.profiles.currentUserProfile
-  );
 
   const handleProfile = () => {
     setIsProfile(!isProfile);
@@ -55,7 +52,6 @@ export const Header = () => {
           {!isAboveMediumScreens && isToggled && (
             <MobileNavBar
               id={conversationId}
-              currentUserProfile={currentUserProfile}
               isToggled={isToggled}
               handleClick={setToggle}
             />
